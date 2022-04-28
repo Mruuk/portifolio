@@ -1,67 +1,278 @@
 <html>
     <head>
+        <meta name="viewport"
+            content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <meta charset="UTF-8">
-        <link rel="stylesheet" href="css/styles.css">
-        <title>
-            Meu Portifólio
-        </title>
+        <meta
+            content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
+            name="viewport">
+        <title>My portfolio</title>
+        <link href="fontawesome/css/all.css" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="css/style.css" />
+        <link rel="stylesheet" type="text/css" href="css/bootstrap-person.css" />
+        <link rel="stylesheet" type="text/css" href="css/sessoes.css" />
+        <link rel="stylesheet" type="text/css" href="css/objetivos.css" />
+        <script type="text/javascript" src="js/jquery-3.3.1.min.js"></script>
+        <script type="text/javascript" src="js/style.js"></script>
+        <script type="text/javascript" src="js/bootstrap.min.js"></script>
     </head>
-    <body>
-        <h1>Ruan dos Santos Lisboa</h1>
-        <dl>
-            <dd>Nascimento: 05/01/1998</dd>
-            <dd>Endereço: Rua Estocolmo, 724, Bairro Assunção, São Bernardo do Campo.</dd>
-            <dd>Telefone: (45) 99980-5505</dd>
-            <dd>E-mail: ruanlissboa @gmail.com</dd>
-            <dd>Estado Civil: Solteiro.</dd>
-        </dl>
-        <br><br>
-        <div class="sobre"><b>Sobre:</b> Trabalho a mais de 5 anos pela OSC Teatro Popular de Ilhéus , exercendo a
-            função de Editor de Vídeo, Operador de Plataformas de Streaming, Suporte Técnico e
-            atualmente liderando o projeto de Ambiente Inteligente no futuro espaço da OSC. Busco
-            atuar na área de Segurança da Informação e me interesso pela área de IOT.</div><br><br>
-        <div><b>Escolaridade:</b></div>
-        <ul>
-            <li>Fundamental e Ensino Médio completo pelo Institudo Nossa Senhora da
-                Piedade.2001-2016;</li>
-            <li>Bacharelado em Ciências da Computação pela Universidade Tecnológica Federal
-                do Paraná .2017/2 (cursando).</li>
-        </ul><br><br>
-        <div><b>Cursos:</b></div>
-        <ul>
-            <li>Curso de Python, ministrado pela Maratona Python, março de 2021;</li>
-            <li>Participou do XV Congresso Latino-Americano de Software Livre e
-                Tecnologias Abertas, Ministrada pela Latinoware, em outubro de 2018;</li>
-            <li>Curso de PHP Academy, ministrada pela Softblue, em junho de 2017;</li>
-            <li>Evento Google I/O16 Extended, ministrado pela Google, em maio de 2016;</li>
-            <li>Projeto protagonista de yoga e meditação, High Flow, ministrado por mim, em
-                parceria com a Universidade Tecnológica Federal do Paraná , em agosto de 2019;</li>
-            <li>Curso: Técnico de invasão, ministrado por Técnicas de Invasão, em dezembro de
-                2020;</li>
-        </ul><br><br>
-        <div><b>Experiência Profissional:</b></div>
-        <ul>
-            <li>Analista de tecnologia e mídias digitais, na OSC Teatro Popular de Ilhéus, em
-                agosto de 2016 – o momento;</li>
-        </ul><br><br>
-        <div><b>Habilidades:</b></div>
-        <ul>
-            <li>framework tensorflow</li>
-            <li>Deep learning</li>
-            <li>scrapping</li>
-            <li>Python;</li>
-            <li>Linguagem C;</li>
-            <li>Linguagem C#;</li>
-            <li>PHP;</li>
-            <li>Java;</li>
-            <li>Shell Script;</li>
-            <li>Editor de vídeo;</li>
-            <li>Criativo;</li>
-            <li>Autodidata;</li>
-            <li>Conhecimento em redes;</li>
-            <li>Conhecimento em Segurança da
-                informação;</li>
-            <li>Conhecimento em IOT;</li>
-        </ul>
+
+    <body class="corpo">
+
+        <div class="interface " data-container="jMenu">
+            <input type="checkbox" id="bt_menu" class="bt_menu"> <label
+                for="bt_menu" class="cont-label btn btn-outline-light btn-sm">&#9776;</label>
+            </input>
+        <head>
+            <h1 class="name-logo">Ruan dos Santos Lisboa</h1>
+            <nav class="menu">
+                <ul>
+                    <a class="inicio btn btn-outline-light btn-sm" href=""><li><h2>inicio</h2></li></a>
+                    <a class="nav-opt-link btn btn-outline-light btn-sm" href=""
+                        title="" data-container="link" data-link="sobremim"><li><h2>Sobre</h2></li></a>
+                        <a class="nav-opt-link btn btn-outline-light btn-sm" href=""
+                        title="" data-container="link" data-link="objetivos"><li><h2>objetivos</h2></li></a>
+                    <a class="nav-opt-link btn btn-outline-light btn-sm" href=""
+                        title="" data-container="link" data-link="cursos"><li><h2>cursos</h2></li></a>
+                    <a class="nav-opt-link btn btn-outline-light btn-sm" href=""
+                        title="" data-container="link" data-link="habilidades"><li><h2>habilidades</h2></li></a>
+                    <a class="nav-opt-link btn btn-outline-light btn-sm" href=""
+                        title="" data-container="link" data-link="jprojetos"><li><h2>projetos</h2></li></a>
+                    
+                </ul>
+            </nav>
+        </head>
+        <header>
+			<nav class="menu2">
+				<ul class="test">
+					<a class="inicio bot" href=""><li><h2>inicio</h2></li></a>
+					<a class="nav-opt-link bot" href="" title="" data-container="link"	data-link="sobremim"><li><h2>Sobre</h2></li></a>
+					<a class="nav-opt-link bot" href="" title="" data-container="link" data-link="objetivos"><li><h2>objetivos</h2></li></a>
+					<a class="nav-opt-link bot" href="" title="" data-container="link"	data-link="cursos"><li><h2>cursos</h2></li></a>
+					<a class="nav-opt-link bot" href="" title="" data-container="link"	data-link="habilidades"><li><h2>habilidades</h2></li></a>
+					<a class="nav-opt-link bot" href="" title="" data-container="link" data-link="jprojetos"><li><h2>projetos</h2></li></a>
+					
+				</ul>
+			</nav>
+		</header>
+	</div>
+    <img class="home"  src="img/menu.jpg" data-container="inici">
+        <section class="slide ">
+            <div class="info-me">
+                <p>
+                <h3 class="anime an0">Idade: 24 - Estado Civil: Solteiro</h3>
+                <br>
+                <h3 class="anime an1">E-mail: ruanlissboa@gmail.com</h3>
+                <br>
+                <h3 class="anime an2">Rua: Estocolmo, 724, Bairro Assunção.</h3>
+                <br>
+                <h3 class="anime an3">Endereço: São Bernardo do Campo, São Paulo - SP</h3>
+                <br>
+                <h3 class="anime an4">Cel: (45) 99980-5505</h3>
+                <br> <img src="img/whats.png" class="icone anime an5">
+                </p>
+            </div>
+        </section>
+
+        <section class="slide  sessao-- sessao-1" data-container="sobremim">
+            <div class="testo-sobremim">
+                <h1>Bem vindo ao meu Portifólio!</h1>
+                <p>
+                    Toda a criação do site feita exclusivamente por mim, <br>buscando
+                    demosntra minhas capacidades e habilidades com desenvolvimentos de
+                    sistemas. <br>Sou uma pessoa autodidata, criativa, pro ativa, tenho sende de aprender e
+                    que busca crescer como pessoa e profissional a cada dia.
+                </p>
+                <div class="a">
+                    <a href="https://www.linkedin.com/in/ruan-lisboa-023766165/" target="_blank">
+                        <img class="btn icon" id="img" src="img/linkedin.png" onmouseover="mouseIn('img')" onmouseout="mouseOut('img')">
+                    </a>
+                </div>
+                <div class="a">
+                    <a href="https://github.com/Mruuk" target="_blank">
+                        <img class="btn icon2" id="img2" src="img/git1.png" onmouseover="mouseIn(2)" onmouseout="mouseOut(2)">
+                    </a>
+                </div>
+                <div class="a">
+                    <a href="https://tryhackme.com/p/mruk" target="_blank">
+                        <img class="btn icon3" id="img3" src="img/hack1.png" onmouseover="mouseIn(3)" onmouseout="mouseOut(3)">
+                        <!--<img class="btn icon3"  src="https://tryhackme-badges.s3.amazonaws.com/mruk.png" alt="TryHackMe">
+                        -->
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <section class="slide  sessao objetivos" data-container="objetivos">
+            <div class="skill">  </div> <div class="skill1"> <h1>OBJETIVOS<h1> </div>
+                <p class="opcaoEs">Selecione uma das opções a Esquerda</p>
+                <div class="tap1">
+                    <img src="img/estagio.jpg" class="estagio">
+                </div>
+                <div class="etg">
+                    <ul>
+                        <li>
+                            Busco estagiar em uma empresa como data science, relacionado a DeepLearning se possivel
+                        </li>
+                        <li>
+                            CLT trabalhar como data science, busco me efetivar e crescer com a empresa <br>
+                            busco aprender o máximo possível a todo momentos
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="tap2">
+                    <img src="img/certificado.png" class="estagio2">
+                </div>
+                <div class="formacao">
+                    <ul>
+                        <li>
+                            Ensino Superior Ciência da Computação pela UTFPR - Santa Helena / conclusão: 09/2024 (Semestre atual 6).
+                        </li>
+                        <li>
+                            Curso de Python, ministrado pela Maratona Python, março de 2021;
+                        </li>
+                        <li>
+                            Participou do XV Congresso Latino-Americano de Software Livre e<br>
+                            Tecnologias Abertas, Ministrada pela Latinoware, em outubro de 2018;
+                        </li>
+                        <li>
+                            Curso de PHP Academy, ministrada pela Softblue, em junho de 2017;
+                        </li>
+                        <li>
+                            Evento Google I/O16 Extended, ministrado pela Google, em maio de 2016;
+                        </li>
+                        <li>
+                            Projeto protagonista de yoga e meditação, High Flow, ministrado por mim, em
+                            parceria com a<br> Universidade Tecnológica Federal do Paraná , em agosto de 2019;
+                        </li>
+                        <li>
+                            Curso Técnico de invasão, ministrado por Técnicas de Invasão, em dezembro de
+                            2020;
+                        </li>
+                        <li>Fundamental e Ensino Médio, completo pelo Institudo Nossa Senhora da
+                            Piedade.2001-2016;
+                        </li>
+                        
+                    </ul>
+                    <span>
+                        Busco ainda fazer cursos para me especializar em machine e deep learning, cloud computing e Ingles. <br>
+                        Tirar certificações na área de  data science<br>
+                        Aprimorar meus conhecimentos em machine learning e deep learning.				
+                    </span>
+                </div>
+
+                <div class="tap3">
+                    <img src="img/projeto.jpg" class="estagio3">
+                </div>
+                <div class="pjVida">
+                    <h1>Projeto de Vida</h1>
+                    <p>
+                        ...
+                    </p>
+                    <p>
+                        ...
+                    </p>
+                   <!-- <p><h6>Obs: toda opnião que possa agregar é bem vinda</h6></p>-->
+                </div>
+        </section>
+
+        <section class="slide sessao-2 cursos"  data-container="cursos">
+                <div class="skill">  </div> <div class="skill1"> <h1>Certificados dos Cusos Concluidos	<h1> </div>
+            <div class="txt">
+                
+            </div>
+        </section>
+
+        <section class="slide  sessao habilidades" data-container="habilidades">
+            <div class="skill">  </div> <div class="skill1"> <h1>CURSOS & HABILIDADES<h1> </div>
+        <div class="java1">
+            <span class="java">Deep learning com Python de A a Z</span><div><img class="java" src="img/cursos/javaa.png" alt=""></div>
+            <div  class="progress java">
+                    <div class="progress-bar progress-bar-animated bg-info progress-bar-striped" role="progressbar" style="width: 86%" aria-valuenow="86" aria-valuemin="0" aria-valuemax="100">
+                        86%
+                    </div> 
+                </div>
+                <div  class="info infoJava">
+                    <span class="sobrejv">Redes neurais artificiais, convolucionais, recorrentes, mapas auto organizáveis, boltzmann machines, autoencoders e GANs</span>
+                    <br><p class="as">4,6 (1.998 classificações) 12.439 alunos inscritos Criado por Jones Granatyr, IA Expert Academy</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="show skl btn btn-info"><p>Habilidades</p></div>
+                
+                <div class="skillLeft">
+                        <div class=" btn btn-danger skl1 delet">X</div>
+                    <div class="infor">
+                            <h1>Habilidades</h1>
+                            <h3>Linguagens, modelos e framework</h3>
+                        <ul>						
+                            <li>Framework tensorflow</li>
+                            <li>Keras</li>
+                            <li>Sklearn</li>
+                            <li>Deep learning</li>
+                            <li>Scrapping</li>
+                            <li>Python;</li>
+                            <li>Linguagem C;</li>
+                            <li>Linguagem C#;</li>
+                            <li>PHP;</li>
+                            <li>Java;</li>
+                            <li>Shell Script;</li>
+                            
+                            
+                        </ul>
+                        <h3>Outros</h3>
+                        <ul>
+                            <li>Linux</li>
+                            <li>Editor de vídeo;</li>
+                            <li>Criativo;</li>
+                            <li>Autodidata;</li>
+                            <li>Conhecimento em redes;</li>
+                            <li>Conhecimento em Segurança da
+                                informação;</li>
+                            <li>Conhecimento em IOT;</li>						
+                        </ul>
+                    </div>
+                </div>
+
+
+        </section>
+
+        <section class="slide  sessao" data-container="jprojetos">
+			<div class="skill">  </div> <div class="skill1"> <h1 style="color: white;">Projetos<h1> </div>
+		<div class="projetos">
+			<a href="https://github.com/Mruuk/DeepLearning"
+				target="_blank"><div>
+					<figure class="foto-come-legenda">
+						<img src="img/logo-projects/xadrez.jpg" />
+						<figcaption>
+							<h3>Deep learning</h3>
+							<p>
+								Com base nos estudos<br> Alguns dos algoritmos que possuo conhecimento
+							</p>
+
+						</figcaption>
+					</figure>
+				</div></a> <a href="https://github.com/Mruuk/scrapping"
+				target="_blank"><div>
+					<figure class="foto-come-legenda1" data-container="jprojetos">
+						<img src="img/logo-projects/Sonic.jpg" />
+						<figcaption>
+							<h3>Scrapping</h3>
+							<p>
+								Com base nos estudos<br> Projeto que busca empregos em alguns sites de emprego
+							</p>
+
+						</figcaption>
+					</figure>
+				</div></a>
+		</div>
+	</section>
+        <div class="btn-back jbtn-back ">
+            <a class="btn-back-link jbtn-back-link" href="" title="">Top</a>
+
+        </div>
+        
     </body>
 </html>
