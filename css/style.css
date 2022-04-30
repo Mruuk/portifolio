@@ -280,6 +280,9 @@ figure.foto-come-legenda1:hover figcaption{
 .icon3:hover {
 	animation: up 1s;
 }
+.icon4:hover {
+	animation: up 1s;
+}
 .infor{
 	position: absolute;
 	float: left;
