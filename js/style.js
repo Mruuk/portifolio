@@ -6,6 +6,8 @@ function mouseIn(img) {
 		document.getElementById('img2').src = "img/git2.png";
 	}else if(test == 3){
 		document.getElementById('img3').src = "img/hack2.png";
+	}else if(test == 4){
+		document.getElementById('img4').src = "img/kaggle2.png";
 	}
 }
 
@@ -17,6 +19,8 @@ function mouseOut(img){
 		document.getElementById('img2').src = "img/git1.png";
 	}else if(test == 3){
 		document.getElementById('img3').src = "img/hack1.png";
+	}else if(test == 4){
+		document.getElementById('img4').src = "img/kaggle.png";
 	}	
 }
 $(document)
