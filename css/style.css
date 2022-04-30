@@ -249,11 +249,20 @@ figure.foto-come-legenda1:hover figcaption{
 	position: absolute;
 	width: 16%;
 	float:left;
-	left:40%;
+	left:25%;
 	top: 180%;
 	cursor: pointer;	
 }
 .icon3{		
+	z-index: 10;
+	position: absolute;
+	width: 16%;
+	float:left;
+	left:50%;
+	top: 180%;
+	cursor: pointer;	
+}
+.icon4{		
 	z-index: 10;
 	position: absolute;
 	width: 16%;
