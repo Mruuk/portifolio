@@ -320,3 +320,42 @@ figure.foto-come-legenda1:hover figcaption{
 
 }
 
+.full-img {
+    position: relative;
+    display: block;
+    width: 540px;
+    height: 480px;
+  }
+  .displayed-img {
+    width: 720px;
+    height: 480px;
+    margin-left: 120%;
+	margin-top: 35%;
+  }
+  .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 540px;
+    height: 480px;
+    background-color: rgba(0,0,0,0);
+  }
+  
+  button {
+    border: 0;
+    background: rgba(150,150,150,0.6);
+    text-shadow: 1px 1px 1px white;
+    border: 1px solid #999;
+    position: absolute;
+    cursor: pointer;
+    top: 2px;
+    left: 2px;
+  }
+  
+  .thumb-bar img {
+    display: block;
+    width: 10%;
+    float: left;
+    cursor: pointer;
+	margin-top: 15%;
+  }
