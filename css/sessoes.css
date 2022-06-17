@@ -358,7 +358,7 @@ p.as{
 
 /* sessao cursos*/
 .cursos{
-	background-image: url(..//img/fundo-certificado.png);	
+	background-image: linear-gradient(to right,#ffffff,#eeeeee, #dddcdc);	
 	background-repeat: no-repeat;
 	background-size: 100% 100%;		
 }
