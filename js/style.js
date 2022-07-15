@@ -156,7 +156,7 @@ $(document)
 									
 					});	
 					$(".show").click(function () {						 						
-						$(".skillLeft").animate({height: '80%'}, 1500);					
+						$(".skillLeft").animate({height: '84%'}, 1500);					
 						$(".skillLeft").css("opacity", "1");
 						$(".skillLeft").animate({left: '69%'});	
 																	
