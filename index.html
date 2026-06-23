@@ -2,82 +2,70 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ruan Lisboa | Arquiteto de Fronteiras</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@200;400&family=JetBrains+Mono:wght@300&display=swap');
-
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        
+
         html, body {
             height: 100%;
             overflow-y: scroll;
-            scroll-snap-type: y mandatory; /* O efeito "travado" */
-            background: #050505;
-            color: #ffffff;
+            scroll-snap-type: y mandatory;
+            background: #050505; color: #ffffff;
             font-family: 'Inter', sans-serif;
         }
 
-        section {
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            scroll-snap-align: start;
-            padding: 20px;
+        /* Efeito Zoom inicial */
+        .hero { 
+            height: 100vh; display: flex; align-items: center; justify-content: center;
+            scroll-snap-align: start; transition: transform 1s ease;
         }
+        .hero h1 { font-family: 'JetBrains Mono', monospace; font-size: 5rem; transform: scale(1); transition: transform 0.8s ease-out; }
+        .hero.zoom-out h1 { transform: scale(0.5); }
 
-        h1 { font-family: 'JetBrains Mono', monospace; font-size: 3.5rem; letter-spacing: -2px; }
-        .tagline { font-family: 'JetBrains Mono', monospace; color: #58a6ff; margin-top: 10px; font-size: 1.1rem; }
-        
-        .content { max-width: 600px; text-align: center; }
-        .manifesto { font-size: 1.5rem; font-style: italic; color: #c9d1d9; line-height: 1.4; }
-        
-        h2 { font-family: 'JetBrains Mono', monospace; font-size: 0.9rem; color: #58a6ff; margin-bottom: 20px; text-transform: uppercase; letter-spacing: 3px; }
-        p { font-size: 1.2rem; color: #8b949e; }
-
-        footer { margin-top: 40px; font-family: 'JetBrains Mono', monospace; }
-        a { color: #58a6ff; text-decoration: none; margin: 0 10px; }
+        /* Container Lateral */
+        .horizontal-container {
+            height: 100vh; display: flex; overflow-x: auto;
+            scroll-snap-type: x mandatory; scroll-snap-align: start;
+        }
+        .slide { 
+            min-width: 100vw; height: 100vh; display: flex; 
+            flex-direction: column; align-items: center; justify-content: center;
+            scroll-snap-align: center;
+        }
     </style>
 </head>
 <body>
 
-    <section>
+    <section class="hero" id="hero">
         <h1>Ruan Lisboa</h1>
-        <div class="tagline">Arquiteto de Fronteiras</div>
     </section>
 
-    <section>
-        <div class="content manifesto">
-            "A complexidade é apenas uma ignorância temporária das variáveis que compõem o sistema."
-        </div>
-    </section>
-
-    <section>
-        <div class="content">
+    <div class="horizontal-container">
+        <section class="slide">
+            <div class="manifesto">"A complexidade é apenas uma ignorância temporária..."</div>
+        </section>
+        <section class="slide">
             <h2>🔭 Frontier Science</h2>
-            <p>Modelagem lógica para o cosmos:<br><em>mebe</em> e <em>SEEV</em>.</p>
-        </div>
-    </section>
-
-    <section>
-        <div class="content">
+            <p>mebe & SEEV</p>
+        </section>
+        <section class="slide">
             <h2>⚙️ Sistemas Ciberfísicos</h2>
-            <p>Tangibilizando a lógica:<br><em>LARA</em> e automação de fluxos.</p>
-        </div>
-    </section>
-
-    <section>
-        <div class="content">
+            <p>LARA & Automação</p>
+        </section>
+        <section class="slide">
             <h2>🧠 Dados & Inteligência</h2>
-            <p>Extração de verdade científica:<br><em>OncoTech</em>.</p>
-            <footer class="content">
-                <a href="http://lattes.cnpq.br/2512347804360799">Lattes</a>
-                <a href="https://www.linkedin.com/in/ruan-lisboa-023766165">LinkedIn</a>
-            </footer>
-        </div>
-    </section>
+            <p>OncoTech</p>
+        </section>
+    </div>
 
+    <script>
+        // Efeito de zoom ao rolar
+        window.addEventListener('scroll', () => {
+            const hero = document.getElementById('hero');
+            if (window.scrollY > 50) { hero.classList.add('zoom-out'); } 
+            else { hero.classList.remove('zoom-out'); }
+        });
+    </script>
 </body>
 </html>
