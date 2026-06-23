@@ -10,40 +10,44 @@
         
         body { margin: 0; background: #0a0a0a; color: #fff; font-family: 'Inter', sans-serif; overflow-x: hidden; }
         
-        /* Hero Section - A apresentação inicial */
-        .hero { height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; }
-        .hero h1 { font-family: 'Space Grotesk', sans-serif; font-size: 6rem; letter-spacing: -4px; margin: 0; }
-        .hero p { font-size: 1.2rem; color: #666; margin-top: 10px; text-transform: uppercase; letter-spacing: 4px; }
+        /* Hero: Apenas o Nome */
+        .hero { height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; }
+        .hero h1 { font-family: 'Space Grotesk', sans-serif; font-size: 6rem; margin: 0; }
 
-        /* Container Horizontal */
+        /* Bio: Apresentação sobre você */
+        .bio-section { height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 0 20%; text-align: center; }
+        .bio-section p { font-size: 1.8rem; line-height: 1.5; color: #aaa; max-width: 800px; }
+
+        /* Horizontal Scroll */
         .scroll-section { height: 100vh; display: flex; align-items: center; }
         .panel { min-width: 100vw; height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 0 10%; }
-        
-        /* Design das Competências */
         .panel h2 { font-family: 'Space Grotesk', sans-serif; font-size: 3rem; color: #58a6ff; margin-bottom: 20px; }
-        .panel p { font-size: 1.5rem; max-width: 600px; text-align: center; line-height: 1.6; color: #ccc; }
+        .panel p { font-size: 1.5rem; max-width: 600px; text-align: center; color: #ccc; }
     </style>
 </head>
 <body>
 
     <section class="hero" id="hero">
         <h1 id="main-title">RUAN LISBOA</h1>
-        <p id="main-subtitle">Arquiteto de Fronteiras</p>
+    </section>
+
+    <section class="bio-section" id="bio">
+        <p>Arquiteto de Fronteiras e Engenheiro de R&D. Dedico-me a decifrar a complexidade dos sistemas naturais e tecnológicos através da modelagem matemática, transformando dados em conhecimento aplicável.</p>
     </section>
 
     <div id="pin-container">
         <div class="scroll-section" id="horizontal-content">
             <section class="panel">
                 <h2>Frontier Science</h2>
-                <p>Modelagem lógica de sistemas complexos e fenômenos celestes. Decifrando a natureza através da matemática computacional.</p>
+                <p>Modelagem lógica de sistemas complexos. Simulação física aplicada ao estudo do cosmos e fenômenos celestes.</p>
             </section>
             <section class="panel">
                 <h2>Sistemas Ciberfísicos</h2>
-                <p>Integração entre hardware e software. Automação de alta precisão com foco em estabilidade e controle ciberfísico.</p>
+                <p>Onde a lógica encontra o mundo físico. Desenvolvimento de sistemas de controle para automação e alta performance.</p>
             </section>
             <section class="panel">
                 <h2>Dados & IA</h2>
-                <p>Extração de verdade científica através de Redes Neurais. Transformo ruído em padrões compreensíveis para tomada de decisão.</p>
+                <p>Extração de verdade científica por meio de Redes Neurais. Transformo ruído em padrões para detecção de anomalias.</p>
             </section>
         </div>
     </div>
@@ -51,20 +55,20 @@
     <script>
         gsap.registerPlugin(ScrollTrigger);
 
-        // Zoom Out cinematográfico do título
+        // Zoom out inicial no nome
         gsap.to("#hero", {
             scale: 0.8, opacity: 0,
-            scrollTrigger: { trigger: "#hero", start: "top top", end: "bottom top", scrub: 1.5 }
+            scrollTrigger: { trigger: "#hero", start: "top top", end: "bottom top", scrub: 1 }
         });
 
-        // Scroll Horizontal com inércia
+        // Scroll Horizontal (só começa depois da Bio)
         let panels = gsap.utils.toArray(".panel");
         gsap.to(panels, {
             xPercent: -100 * (panels.length - 1),
-            ease: "power2.inOut",
+            ease: "none",
             scrollTrigger: {
                 trigger: "#pin-container",
-                pin: true, scrub: 2, start: "top top", end: "+=3000"
+                pin: true, scrub: 1, start: "top top", end: "+=3000"
             }
         });
     </script>
