@@ -2,69 +2,41 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <title>Ruan Lisboa | Arquiteto de Fronteiras</title>
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        html, body {
-            height: 100%;
-            overflow: hidden; /* Importante: esconde a barra de rolagem padrão */
-            background: #050505; color: #fff;
-            font-family: 'Inter', sans-serif;
-        }
+        body, html { margin: 0; padding: 0; background: #000; color: #fff; font-family: 'Inter', sans-serif; overflow-x: hidden; }
 
-        /* Container que fará o "Full-Page Snap" */
-        #viewport {
-            height: 100vh;
-            width: 100vw;
-            overflow-y: auto;
-            scroll-snap-type: y mandatory;
-        }
+        /* Container principal para o efeito de rolagem */
+        .page { height: 100vh; display: flex; align-items: center; justify-content: center; position: relative; }
 
-        section {
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            scroll-snap-align: start;
-        }
+        /* Texto Centralizado e Minimalista */
+        .hero { text-align: center; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); transition: transform 0.1s ease-out; width: 100%; }
+        h1 { font-size: 4rem; margin: 0; }
+        p { font-size: 1rem; opacity: 0.7; margin-top: 10px; }
 
-        /* Efeito de Zoom no H1 da Hero */
-        #hero-text {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 5rem;
-            transition: transform 0.5s ease-out;
-        }
+        /* Seções de conteúdo que virão após o scroll */
+        .content { height: 100vh; display: flex; align-items: center; justify-content: center; font-size: 2rem; }
     </style>
 </head>
 <body>
 
-    <div id="viewport">
-        <!-- Tela 1: Zoom -->
-        <section>
-            <h1 id="hero-text">Ruan Lisboa</h1>
-        </section>
-
-        <!-- Tela 2: Manifesto -->
-        <section>
-            <p>"A complexidade é apenas uma ignorância temporária..."</p>
-        </section>
-
-        <!-- Tela 3: Ocupações -->
-        <section>
-            <h2>Frontier Science | R&D | IA</h2>
-        </section>
+    <div class="hero" id="hero">
+        <h1>Ruan Lisboa</h1>
+        <p>A complexidade é uma ignorância temporária.</p>
     </div>
 
-    <script>
-        const viewport = document.getElementById('viewport');
-        const hero = document.getElementById('hero-text');
+    <div style="height: 300vh;"></div>
 
-        viewport.addEventListener('scroll', () => {
-            // Efeito de Zoom: quanto mais rola, menor o texto fica
-            let scrollPos = viewport.scrollTop;
-            let scale = Math.max(0.2, 1 - (scrollPos / 300));
-            hero.style.transform = `scale(${scale})`;
+    <script>
+        window.addEventListener('scroll', () => {
+            const hero = document.getElementById('hero');
+            const scroll = window.scrollY;
+            
+            // O zoom out: começa em 1, vai até 0.4
+            let scale = Math.max(0.4, 1 - (scroll / 600));
+            hero.style.transform = `translate(-50%, -50%) scale(${scale})`;
+            
+            // Fade out do texto conforme desce
+            hero.style.opacity = Math.max(0, 1 - (scroll / 400));
         });
     </script>
 </body>
