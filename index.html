@@ -79,22 +79,54 @@
     </div>
 
     <script>
-        gsap.registerPlugin(ScrollTrigger);
+    gsap.registerPlugin(ScrollTrigger);
 
-        gsap.to("#hero", {
-            scale: 0.8, opacity: 0,
-            scrollTrigger: { trigger: "#hero", start: "top top", end: "bottom top", scrub: 1 }
-        });
+    // Zoom Out Inicial mais suave
+    gsap.to("#hero", {
+        scale: 0.9, 
+        opacity: 0,
+        ease: "power1.out",
+        scrollTrigger: { 
+            trigger: "#hero", 
+            start: "top top", 
+            end: "bottom top", 
+            scrub: 2.5 // Amortecimento maior = mais fluido
+        }
+    });
 
-        let panels = gsap.utils.toArray(".panel");
-        gsap.to(panels, {
-            xPercent: -100 * (panels.length - 1),
-            ease: "power2.inOut",
-            scrollTrigger: {
-                trigger: "#pin-container",
-                pin: true, scrub: 2, start: "top top", end: "+=3000"
+    // Scroll Horizontal Dinâmico com escala de entrada
+    let panels = gsap.utils.toArray(".panel");
+    
+    // Animação de entrada para cada painel
+    panels.forEach((panel, i) => {
+        gsap.fromTo(panel, 
+            { scale: 0.95, opacity: 0 }, 
+            { 
+                scale: 1, 
+                opacity: 1,
+                scrollTrigger: {
+                    trigger: panel,
+                    containerAnimation: tl, // Opcional: para sincronia absoluta
+                    start: "left center",
+                    toggleActions: "play reverse play reverse"
+                }
             }
-        });
-    </script>
+        );
+    });
+
+    // A linha do tempo principal do scroll horizontal
+    let tl = gsap.to(panels, {
+        xPercent: -100 * (panels.length - 1),
+        ease: "power2.inOut",
+        scrollTrigger: {
+            trigger: "#pin-container",
+            pin: true, 
+            scrub: 2.5, // Amortecimento maior para maior fluidez
+            start: "top top", 
+            end: "+=3500", // Aumentado para dar mais "espaço" ao scroll
+            invalidateOnRefresh: true
+        }
+    });
+</script>
 </body>
 </html>
