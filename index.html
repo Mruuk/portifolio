@@ -9,19 +9,23 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@200;400;700&family=Space+Grotesk:wght@300;500&display=swap');
         
-        body { margin: 0; background: #050505; color: #fff; font-family: 'Inter', sans-serif; overflow-x: hidden; }
+        body { margin: 0; background: radial-gradient(circle at 50% 50%, #151515 0%, #050505 100%); color: #fff; font-family: 'Inter', sans-serif; overflow-x: hidden; }
         
+        .background-grid {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background-image: linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px), 
+                              linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+            background-size: 50px 50px; pointer-events: none; z-index: -1;
+        }
+
         .section { height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 0 10%; text-align: center; }
         
-        /* Hero */
         .hero h1 { font-family: 'Space Grotesk', sans-serif; font-size: 5rem; margin: 0; }
         .subtitle { color: #ff4400; font-family: 'JetBrains Mono', monospace; margin-top: 10px; letter-spacing: 2px; }
 
-        /* Bio & Manifesto */
         .bio-text { font-size: 1.2rem; max-width: 700px; line-height: 1.6; color: #ccc; }
         .manifesto-text { font-size: 1.5rem; font-style: italic; max-width: 700px; color: #aaa; }
 
-        /* Scroll Horizontal */
         .pin-container { height: 100vh; display: flex; align-items: center; }
         .panel { min-width: 100vw; height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 0 10%; text-align: center; }
         
@@ -29,10 +33,12 @@
         .panel h2 { font-family: 'Space Grotesk', sans-serif; font-size: 3rem; color: #ff4400; margin-bottom: 20px; }
         .panel p { font-size: 1.2rem; max-width: 600px; color: #888; }
         
-        .cta-button { margin-top: 30px; padding: 15px 30px; background: #ff4400; color: #000; text-decoration: none; font-weight: bold; border-radius: 4px; }
+        .cta-button { margin-top: 30px; padding: 15px 30px; background: #ff4400; color: #fff; text-decoration: none; font-weight: bold; border-radius: 4px; transition: 0.3s; }
+        .cta-button:hover { background: #cc3600; }
     </style>
 </head>
 <body>
+    <div class="background-grid"></div>
 
     <section class="hero" id="hero">
         <h1 id="title">RUAN LISBOA</h1>
@@ -46,10 +52,9 @@
     <section class="section">
         <h2 style="font-family: 'Space Grotesk'; color: #ff4400; margin-bottom: 20px;">Sobre</h2>
         <p class="bio-text">
-            Arquiteto de Fronteiras e empreendedor baseado em Ilhéus, atuo na interseção entre design, tecnologia e pesquisa científica. 
-            Minha trajetória é marcada pela busca constante por otimização técnica, seja desenvolvendo automações complexas, 
-            prototipando hardware ou modelando sistemas em 3D. Acredito na tecnologia como extensão do pensamento lógico 
-            para resolver problemas reais e antecipar soluções de alta performance.
+            Arquiteto de Fronteiras baseado em Ilhéus, atuo na interseção entre design, tecnologia e pesquisa científica. 
+            Minha trajetória é marcada pela busca constante por otimização técnica, desenvolvendo automações, 
+            prototipagem de hardware e sistemas complexos. A tecnologia é a minha extensão do pensamento lógico.
         </p>
     </section>
 
@@ -72,61 +77,29 @@
             </section>
             <section class="panel">
                 <h2>Avaliação de Projeto</h2>
-                <p>Para assegurar que cada projeto receba o rigor técnico necessário, utilizo um formulário para análise de viabilidade antes de assumir novos desafios.</p>
+                <p>Para assegurar o rigor técnico necessário, utilizo um formulário para análise de viabilidade antes de assumir novos desafios.</p>
                 <a href="https://forms.gle/hAp8Kv16ofgu1XN27" class="cta-button">INICIAR LEVANTAMENTO TÉCNICO</a>
             </section>
         </div>
     </div>
 
     <script>
-    gsap.registerPlugin(ScrollTrigger);
+        gsap.registerPlugin(ScrollTrigger);
 
-    // Zoom Out Inicial mais suave
-    gsap.to("#hero", {
-        scale: 0.9, 
-        opacity: 0,
-        ease: "power1.out",
-        scrollTrigger: { 
-            trigger: "#hero", 
-            start: "top top", 
-            end: "bottom top", 
-            scrub: 2.5 // Amortecimento maior = mais fluido
-        }
-    });
+        gsap.to("#hero", {
+            scale: 0.9, opacity: 0,
+            scrollTrigger: { trigger: "#hero", start: "top top", end: "bottom top", scrub: 2.5 }
+        });
 
-    // Scroll Horizontal Dinâmico com escala de entrada
-    let panels = gsap.utils.toArray(".panel");
-    
-    // Animação de entrada para cada painel
-    panels.forEach((panel, i) => {
-        gsap.fromTo(panel, 
-            { scale: 0.95, opacity: 0 }, 
-            { 
-                scale: 1, 
-                opacity: 1,
-                scrollTrigger: {
-                    trigger: panel,
-                    containerAnimation: tl, // Opcional: para sincronia absoluta
-                    start: "left center",
-                    toggleActions: "play reverse play reverse"
-                }
+        let panels = gsap.utils.toArray(".panel");
+        gsap.to(panels, {
+            xPercent: -100 * (panels.length - 1),
+            ease: "power2.inOut",
+            scrollTrigger: {
+                trigger: "#pin-container",
+                pin: true, scrub: 2.5, start: "top top", end: "+=3500"
             }
-        );
-    });
-
-    // A linha do tempo principal do scroll horizontal
-    let tl = gsap.to(panels, {
-        xPercent: -100 * (panels.length - 1),
-        ease: "power2.inOut",
-        scrollTrigger: {
-            trigger: "#pin-container",
-            pin: true, 
-            scrub: 2.5, // Amortecimento maior para maior fluidez
-            start: "top top", 
-            end: "+=3500", // Aumentado para dar mais "espaço" ao scroll
-            invalidateOnRefresh: true
-        }
-    });
-</script>
+        });
+    </script>
 </body>
 </html>
