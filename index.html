@@ -6,8 +6,15 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
     <style>
-        body { margin: 0; background: #050505; color: #fff; font-family: 'Inter', sans-serif; overflow-x: hidden; }
+        body { margin: 0; background: radial-gradient(circle at 50% 50%, #151515 0%, #050505 100%); color: #fff; font-family: 'Inter', sans-serif; overflow-x: hidden; }
         
+        .background-grid {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background-image: linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px), 
+                              linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+            background-size: 50px 50px; pointer-events: none; z-index: -1;
+        }
+
         /* Ajuste de Margem: Container com respiro */
         .section { min-height: 80vh; display: flex; flex-direction: column; justify-content: center; align-items: flex-start; padding: 100px 10%; }
         
@@ -21,8 +28,8 @@
         .panel { min-width: 100vw; height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: flex-start; padding: 0 10%; }
         
         .label { font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; color: #ff4400; letter-spacing: 3px; margin-bottom: 20px; text-transform: uppercase; border: 1px solid #ff4400; padding: 6px 14px; border-radius: 20px; }
-        .panel h2 { font-family: 'Space Grotesk', sans-serif; font-size: 4rem; color: #ff4400; margin: 0 0 20px 0; }
-        .panel p { font-size: 1.4rem; max-width: 600px; color: #aaa; line-height: 1.6; }
+        .panel h2 { font-family: 'Space Grotesk', sans-serif; font-size: 3rem; color: #ff4400; margin: 0 0 20px 0; }
+        .panel p { font-size: 1.2rem; max-width: 600px; color: #aaa; line-height: 1.6; }
         
         .cta-button { margin-top: 40px; padding: 15px 30px; background: #ff4400; color: #fff; text-decoration: none; font-weight: bold; border-radius: 4px; }
     </style>
@@ -40,7 +47,7 @@
 
     <section class="section">
         <h2 style="font-family: 'Space Grotesk'; color: #ff4400;">Sobre</h2>
-        <p style="font-size: 1.4rem; max-width: 700px; color: #ccc; line-height: 1.6;">
+        <p style="font-size: 1.2rem; max-width: 700px; color: #ccc; line-height: 1.6;">
             Arquiteto de Fronteiras baseado em Ilhéus, atuo na interseção entre design, tecnologia e pesquisa. 
             Busco a otimização técnica em automações, hardware e sistemas complexos. A tecnologia é minha extensão do pensamento lógico.
         </p>
