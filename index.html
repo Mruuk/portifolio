@@ -3,40 +3,52 @@
 <head>
     <meta charset="UTF-8">
     <style>
-        body, html { margin: 0; padding: 0; background: #000; color: #fff; font-family: 'Inter', sans-serif; overflow-x: hidden; }
+        body { margin: 0; background: #000; color: #fff; font-family: 'Inter', sans-serif; }
 
-        /* Container principal para o efeito de rolagem */
-        .page { height: 100vh; display: flex; align-items: center; justify-content: center; position: relative; }
+        /* Container que mantém o texto fixo no centro enquanto o resto rola */
+        .hero-container { 
+            position: fixed; 
+            top: 50%; left: 50%; 
+            transform: translate(-50%, -50%); 
+            text-align: center;
+            width: 100%;
+            transition: opacity 0.5s ease;
+        }
 
-        /* Texto Centralizado e Minimalista */
-        .hero { text-align: center; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); transition: transform 0.1s ease-out; width: 100%; }
         h1 { font-size: 4rem; margin: 0; }
-        p { font-size: 1rem; opacity: 0.7; margin-top: 10px; }
+        
+        /* Espaçamento grande para criar o scroll */
+        .spacer { height: 300vh; }
 
-        /* Seções de conteúdo que virão após o scroll */
-        .content { height: 100vh; display: flex; align-items: center; justify-content: center; font-size: 2rem; }
+        .content-section { padding: 100px 20px; text-align: center; font-size: 2rem; }
     </style>
 </head>
 <body>
 
-    <div class="hero" id="hero">
+    <div class="hero-container" id="hero">
         <h1>Ruan Lisboa</h1>
         <p>A complexidade é uma ignorância temporária.</p>
     </div>
 
-    <div style="height: 300vh;"></div>
+    <!-- Espaço para rolar -->
+    <div class="spacer"></div>
+
+    <section class="content-section">
+        <h2>Frontier Science</h2>
+        <p>Conteúdo dos projetos aqui...</p>
+    </section>
 
     <script>
         window.addEventListener('scroll', () => {
-            const hero = document.getElementById('hero');
             const scroll = window.scrollY;
+            const hero = document.getElementById('hero');
             
-            // O zoom out: começa em 1, vai até 0.4
-            let scale = Math.max(0.4, 1 - (scroll / 600));
+            // Zoom suave: o texto encolhe um pouco ao rolar
+            const scale = Math.max(0.3, 1 - (scroll / 400));
             hero.style.transform = `translate(-50%, -50%) scale(${scale})`;
             
-            // Fade out do texto conforme desce
-            hero.style.opacity = Math.max(0, 1 - (scroll / 400));
+            // Fade out suave
+            hero.style.opacity = Math.max(0, 1 - (scroll / 200));
         });
     </script>
 </body>
