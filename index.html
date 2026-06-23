@@ -76,4 +76,24 @@
     
     <div class="area">
         <h3>🧠 Dados & Inteligência</h3>
-        <p>IA para extração de verdade científica: <em>OncoTech</em> (análise celular via redes neurais).</p
+        <p>IA para extração de verdade científica: <em>OncoTech</em> (análise celular via redes neurais).</p>
+    </div>
+
+    <hr>
+    <p><a href="http://lattes.cnpq.br/2512347804360799">Lattes</a> | <a href="https://www.linkedin.com/in/ruan-lisboa-023766165">LinkedIn</a></p>
+
+    <script>
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.area').forEach(area => {
+            observer.observe(area);
+        });
+    </script>
+</body>
+</html>
