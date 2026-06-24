@@ -34,6 +34,32 @@
         .panel p { font-size: 1.2rem; max-width: 600px; color: #aaa; line-height: 1.6; }
         
         .cta-button { margin-top: 40px; padding: 15px 30px; background: #ff4400; color: #fff; text-decoration: none; font-weight: bold; border-radius: 4px; }
+        
+        .panel {
+            min-width: 100vw;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center; /* Centraliza verticalmente no viewport */
+            align-items: center;     /* Centraliza horizontalmente (isso alinha imagem e texto) */
+            padding: 0 10%;
+        }
+
+        .panel img {
+            width: 40%;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            display: block;
+            margin-bottom: 20px; /* Espaçamento entre a imagem e o texto */
+        }
+
+        .panel .caption {
+            font-size: 0.9rem;
+            color: #666;
+            text-align: center; /* Garante que o texto fique centralizado abaixo da imagem */
+            font-family: 'JetBrains Mono', monospace;
+            max-width: 40%;     /* Mantém a largura do texto igual à da imagem */
+        }
     </style>
 </head>
 <body>
@@ -71,25 +97,25 @@
 
     <div id="main-scroll-container">
     
-    <div id="pin-lara">
-        <div class="pin-container" id="horizontal-wrapper-lara">
-            <section class="panel">
-                <span class="label">INFRAESTRUTURA TÉCNICA</span>
-                <h2>LARA: Conheça mais</h2>
-                <p style="font-size: 1.1rem;">O sistema de automação que unifica luz, som e vídeo em uma única interface. Otimizado para confiabilidade crítica e integração total.</p>
-            </section>
+   <div id="pin-lara">
+    <div class="pin-container" id="horizontal-wrapper-lara">
+        <section class="panel">
+            <span class="label">INFRAESTRUTURA TÉCNICA</span>
+            <h2>LARA: Conheça mais</h2>
+            <p>O sistema de automação que unifica luz, som e vídeo em uma única interface. Otimizado para confiabilidade crítica e integração total.</p>
+        </section>
 
-            <section class="panel">
-                <img src="img/home.png" style="width: 80%; border-radius: 8px; border: 1px solid #333;">
-                <p style="margin-top: 20px;">Interface de controle central do sistema.</p>
-            </section>
+        <section class="panel">
+            <img src="img/home.png" alt="Interface LARA">
+            <p class="caption">Interface de controle central do sistema.</p>
+        </section>
 
-            <section class="panel">
-                <img src="img/show.png" style="width: 80%; border-radius: 8px; border: 1px solid #333;">
-                <p style="margin-top: 20px;">Matriz de automação e gerenciamento de cues.</p>
-            </section>
-        </div>
+        <section class="panel">
+            <img src="img/show.png" alt="Matriz de cues LARA">
+            <p class="caption">Matriz de automação e gerenciamento de cues.</p>
+        </section>
     </div>
+</div>
 
     <section class="section">
         <span class="label" style="border-color: #ff4400; color: #ff4400;">PROJETO LARA</span>
