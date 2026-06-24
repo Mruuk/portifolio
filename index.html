@@ -56,8 +56,55 @@
         </p>
     </section>
 
-    <div id="pin-container">
-        <div class="pin-container" id="horizontal-wrapper">
+    <section class="section">
+        <span class="label" style="border-color: #ff4400; color: #ff4400;">SISTEMA EM DESTAQUE</span>
+        <h2 style="font-family: 'Space Grotesk'; color: #ff4400; margin-bottom: 20px;">LARA</h2>
+        <p style="font-size: 1.2rem; max-width: 800px; color: #ccc; line-height: 1.6;">
+            <strong>(Lighting, Audio, Render Automation)</strong> é um sistema integrado de controle de espetáculo, 
+            projetado para unificar diferentes softwares de luz, som e projeção em um único fluxo operacional. 
+            O sistema atua como uma camada de automação entre o operador e os softwares de execução, 
+            permitindo o disparo de cenas e estados de luz a partir de uma única interface. 
+            O LARA reduz a complexidade operacional, aumenta a confiabilidade em apresentações ao vivo 
+            e oferece uma base open source extensível para projetos artísticos e técnicos.
+        </p>
+    </section>
+
+    <div id="main-scroll-container">
+    
+    <div id="pin-lara">
+        <div class="pin-container" id="horizontal-wrapper-lara">
+            <section class="panel">
+                <span class="label">INFRAESTRUTURA TÉCNICA</span>
+                <h2>LARA: Conheça mais</h2>
+                <p style="font-size: 1.1rem;">O sistema de automação que unifica luz, som e vídeo em uma única interface. Otimizado para confiabilidade crítica e integração total.</p>
+            </section>
+
+            <section class="panel">
+                <img src="img/home.png" style="width: 80%; border-radius: 8px; border: 1px solid #333;">
+                <p style="margin-top: 20px;">Interface de controle central do sistema.</p>
+            </section>
+
+            <section class="panel">
+                <img src="img/show.png" style="width: 80%; border-radius: 8px; border: 1px solid #333;">
+                <p style="margin-top: 20px;">Matriz de automação e gerenciamento de cues.</p>
+            </section>
+        </div>
+    </div>
+
+    <section class="section">
+        <span class="label" style="border-color: #ff4400; color: #ff4400;">PROJETO LARA</span>
+        <h2 style="font-family: 'Space Grotesk'; color: #ff4400; margin-bottom: 20px;">Open Source & Desenvolvimento</h2>
+        <p style="font-size: 1.2rem; max-width: 800px; color: #ccc; line-height: 1.6;">
+        O LARA encontra-se em fase final de desenvolvimento. Meu compromisso é disponibilizar esta tecnologia 
+        <strong>gratuitamente para grupos e companhias culturais</strong> (teatro, dança e artes performáticas), 
+        atuando como uma ferramenta de fomento e suporte operacional. Acredito que a tecnologia deve ser 
+        um facilitador que remove barreiras técnicas, permitindo que a visão artística do palco se realize 
+        sem as limitações de sistemas complexos e inacessíveis.
+    </p>
+    </section>
+
+    <div id="pin-projetos">
+        <div class="pin-container" id="horizontal-wrapper-projetos">
             <section class="panel">
                 <span class="label">PESQUISA & CIÊNCIA</span>
                 <h2>Frontier Science</h2>
@@ -90,19 +137,34 @@
             scrollTrigger: { trigger: "#hero", start: "top top", end: "bottom top", scrub: 3 }
         });
 
-        // Scroll Horizontal (o pin é necessário aqui, mas sem travar as seções de texto acima)
-        let panels = gsap.utils.toArray(".panel");
-        gsap.to(panels, {
-            xPercent: -100 * (panels.length - 1),
-            ease: "none",
-            scrollTrigger: {
-                trigger: "#pin-container",
-                pin: true, 
-                scrub: 3, // Aumentar o scrub aumenta a sensação de "peso" e desaceleração
-                start: "top top", 
-                end: "+=3000"
-            }
-        });
+        // LARA HORIZONTAL
+    let laraPanels = gsap.utils.toArray("#horizontal-wrapper-lara .panel");
+    gsap.to(laraPanels, {
+        xPercent: -100 * (laraPanels.length - 1),
+        ease: "none",
+        scrollTrigger: {
+            trigger: "#pin-lara",
+            pin: true,
+            scrub: 2,
+            start: "top top",
+            end: "+=4000"
+        }
+    });
+
+    // PROJETOS HORIZONTAL
+    let projPanels = gsap.utils.toArray("#horizontal-wrapper-projetos .panel");
+    gsap.to(projPanels, {
+        xPercent: -100 * (projPanels.length - 1),
+        ease: "none",
+        scrollTrigger: {
+            trigger: "#pin-projetos",
+            pin: true,
+            scrub: 2,
+            start: "top top",
+            end: "+=3000"
+        }
+    });
+
     </script>
 </body>
 </html>
