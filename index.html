@@ -1,213 +1,292 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ruan Lisboa | Arquiteto de Fronteiras</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@200;400;700&family=Space+Grotesk:wght@300;500&display=swap');
+    <!DOCTYPE html>
+    <html lang="pt-br">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Ruan Lisboa | Arquiteto de Fronteiras</title>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+        <style>
+            @import url('https://fonts.googleapis.com/css2?family=Inter:wght@200;400;700&family=Space+Grotesk:wght@300;500&display=swap');
+            
+            body { margin: 0; background: radial-gradient(circle at 50% 50%, #151515 0%, #050505 100%); color: #fff; font-family: 'Inter', sans-serif; overflow-x: hidden; }
+            
+            .background-grid {
+                position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+                background-image: linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px), 
+                                linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+                background-size: 50px 50px; pointer-events: none; z-index: 0;
+            }
+            /* Ajuste de Margem: Container com respiro */
+            .section { min-height: 80vh; display: flex; flex-direction: column; justify-content: center; align-items: flex-start; padding: 100px 10%; }
+            
+            /* Nome com margem */
+            .hero { height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: flex-start; padding-left: 10%; }
+            .hero h1 { font-family: 'Space Grotesk', sans-serif; font-size: 4rem; margin: 0; line-height: 1; }
+            .subtitle { color: #ff4400; font-family: 'JetBrains Mono', monospace; margin-top: 20px; letter-spacing: 2px; }
+
+            /* Projetos */
+            .pin-container { height: 100vh; display: flex; align-items: center; }
+            .panel { min-width: 100vw; height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: flex-start; padding: 0 10%; }
+            
+            .label { font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; color: #ff4400; letter-spacing: 3px; margin-bottom: 20px; text-transform: uppercase; border: 1px solid #ff4400; padding: 6px 14px; border-radius: 20px; }
+            .panel h2 { font-family: 'Space Grotesk', sans-serif; font-size: 3rem; color: #ff4400; margin: 0 0 20px 0; }
+            .panel p { font-size: 1.2rem; max-width: 600px; color: #aaa; line-height: 1.6; }
+            
+            .cta-button { margin-top: 40px; padding: 15px 30px; background: #ff4400; color: #fff; text-decoration: none; font-weight: bold; border-radius: 4px; }
+            
+            .panel {
+                min-width: 100vw;
+                height: 100vh;
+                display: flex;
+                flex-direction: column;
+                justify-content: center; /* Centraliza verticalmente no viewport */
+                align-items: center;     /* Centraliza horizontalmente (isso alinha imagem e texto) */
+                padding: 0 10%;
+            }
+
+            .panel img {
+                max-width: 80vh;    /* Limita o tamanho, mas não distorce */
+                max-height: 80vh;  /* Garante que não fique gigante em telas altas */
+                object-fit: contain; /* Isso é o segredo: mantém a proporção original */
+                border-radius: 12px;
+                box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+                display: block;
+                margin: 0 auto 20px auto;
+            }
+            /* Seleciona o segundo painel dentro do wrapper do LARA */
+            #horizontal-wrapper-lara .panel:nth-child(3) img {
+                margin-left: -300px; /* Ajuste este valor conforme a proximidade desejada */
+                margin-right: 0;   /* Garante que o alinhamento não seja forçado para a direita */
+            }
+
+            .panel .caption {
+                font-size: 0.9rem;
+                color: #666;
+                text-align: center; /* Garante que o texto fique centralizado abaixo da imagem */
+                font-family: 'JetBrains Mono', monospace;
+                max-width: 40%;     /* Mantém a largura do texto igual à da imagem */
+            }
+
+            #trail-container {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            pointer-events: none;
+            z-index: 1;
+            overflow: hidden;
+            isolation: isolate;
+            }
+
+            .orange-grid {
+                position: fixed;
+                top: 0; left: 0;
+                width: 100%; height: 100%;
+                pointer-events: none;
+                z-index: -1;
+                opacity: 1; /* O grid fica visível */
+                
+                background-image: linear-gradient(rgba(255, 68, 0, 0.8) 1px, transparent 1px), 
+                                linear-gradient(90deg, rgba(255, 68, 0, 0.8) 1px, transparent 1px);
+                background-size: 50px 50px;
+                
+                /* O Grid inteiro fica "mascarado" por padrão, ele só aparece onde desenharmos */
+                mask-image: radial-gradient(circle 100px at -100px -100px, black, transparent);
+                -webkit-mask-image: radial-gradient(circle 100px at -100px -100px, black, transparent);
+            }
+
+            .trail-dot {
+                position: absolute;
+                width: 60px;
+                height: 60px;
+                border-radius: 50%;
+                background: rgba(255, 68, 0, 0.3); /* Cor do rastro */
+                filter: blur(30px);
+                pointer-events: none;
+                transform: translate(-50%, -50%);
+                z-index: 2; /* Fica acima do grid para dar destaque */
+            }
+            
+        </style>
+    </head>
+    <body>
+        <div class="background-grid"></div>
+        <div class="orange-grid"></div> 
+        <div id="trail-container"></div>
         
-        body { margin: 0; background: radial-gradient(circle at 50% 50%, #151515 0%, #050505 100%); color: #fff; font-family: 'Inter', sans-serif; overflow-x: hidden; }
-        
-        .background-grid {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background-image: linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px), 
-                              linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
-            background-size: 50px 50px; pointer-events: none; z-index: -1;
-        }
-        /* Ajuste de Margem: Container com respiro */
-        .section { min-height: 80vh; display: flex; flex-direction: column; justify-content: center; align-items: flex-start; padding: 100px 10%; }
-        
-        /* Nome com margem */
-        .hero { height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: flex-start; padding-left: 10%; }
-        .hero h1 { font-family: 'Space Grotesk', sans-serif; font-size: 4rem; margin: 0; line-height: 1; }
-        .subtitle { color: #ff4400; font-family: 'JetBrains Mono', monospace; margin-top: 20px; letter-spacing: 2px; }
 
-        /* Projetos */
-        .pin-container { height: 100vh; display: flex; align-items: center; }
-        .panel { min-width: 100vw; height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: flex-start; padding: 0 10%; }
-        
-        .label { font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; color: #ff4400; letter-spacing: 3px; margin-bottom: 20px; text-transform: uppercase; border: 1px solid #ff4400; padding: 6px 14px; border-radius: 20px; }
-        .panel h2 { font-family: 'Space Grotesk', sans-serif; font-size: 3rem; color: #ff4400; margin: 0 0 20px 0; }
-        .panel p { font-size: 1.2rem; max-width: 600px; color: #aaa; line-height: 1.6; }
-        
-        .cta-button { margin-top: 40px; padding: 15px 30px; background: #ff4400; color: #050505 ; text-decoration: none; font-weight: bold; border-radius: 8px; }
-        
-        .panel {
-            min-width: 100vw;
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center; /* Centraliza verticalmente no viewport */
-            align-items: center;     /* Centraliza horizontalmente (isso alinha imagem e texto) */
-            padding: 0 10%;
-        }
-
-        .panel img {
-            max-width: 80vh;    /* Limita o tamanho, mas não distorce */
-            max-height: 80vh;  /* Garante que não fique gigante em telas altas */
-            object-fit: contain; /* Isso é o segredo: mantém a proporção original */
-            border-radius: 12px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-            display: block;
-            margin: 0 auto 20px auto;
-        }
-        /* Seleciona o segundo painel dentro do wrapper do LARA */
-        #horizontal-wrapper-lara .panel:nth-child(3) img {
-            margin-left: -300px; /* Ajuste este valor conforme a proximidade desejada */
-            margin-right: 0;   /* Garante que o alinhamento não seja forçado para a direita */
-        }
-
-        .panel .caption {
-            font-size: 0.9rem;
-            color: #666;
-            text-align: center; /* Garante que o texto fique centralizado abaixo da imagem */
-            font-family: 'JetBrains Mono', monospace;
-            max-width: 40%;     /* Mantém a largura do texto igual à da imagem */
-        }
-    </style>
-</head>
-<body>
-    <div class="background-grid"></div>
-
-    <section class="hero" id="hero">
-        <h1 id="title">RUAN LISBOA</h1>
-        <div class="subtitle">Arquiteto de Fronteiras | R&D Engineer| Pesquisador</div>
-    </section>
-
-    <section class="section">
-        <p style="font-size: 1.8rem; font-style: italic; max-width: 700px; color: #ccc;">"A complexidade é apenas uma ignorância temporária das variáveis que compõem o sistema."</p>
-    </section>
-
-    <section class="section">
-        <h2 style="font-family: 'Space Grotesk'; color: #ff4400;">Sobre</h2>
-        <p style="font-size: 1.2rem; max-width: 700px; color: #ccc; line-height: 1.6;">
-            Arquiteto de Fronteiras baseado em Ilhéus, atuo na interseção entre design, tecnologia e pesquisa. 
-            Busco a otimização técnica em automações, hardware e sistemas complexos. A tecnologia é minha extensão do pensamento lógico.
-        </p>
-    </section>
-
-    <section class="section">
-        <span class="label" style="border-color: #ff4400; color: #ff4400;">SISTEMA EM DESTAQUE</span>
-        <h2 style="font-family: 'Space Grotesk'; color: #ff4400; margin-bottom: 20px;">LARA</h2>
-        <p style="font-size: 1.2rem; max-width: 800px; color: #ccc; line-height: 1.6;">
-            <strong>(Lighting, Audio, Render Automation)</strong> é um sistema integrado de controle de espetáculo, 
-            projetado para unificar diferentes softwares de luz, som e projeção em um único fluxo operacional. 
-            O sistema atua como uma camada de automação entre o operador e os softwares de execução, 
-            permitindo o disparo de cenas e estados de luz a partir de uma única interface. 
-            O LARA reduz a complexidade operacional, aumenta a confiabilidade em apresentações ao vivo 
-            e oferece uma base open source extensível para projetos artísticos e técnicos.
-        </p>
-    </section>
-
-    <div id="main-scroll-container">
-    
-   <div id="pin-lara">
-    <div class="pin-container" id="horizontal-wrapper-lara">
-        <section class="panel">
-            <span class="label">INFRAESTRUTURA TÉCNICA</span>
-            <h2>LARA: Conheça mais</h2>
-            <p style="max-width: 650px; margin-left: 5%;">O sistema de automação que unifica luz, som e vídeo em uma única interface. Otimizado para confiabilidade crítica e integração total.</p>
+        <section class="hero" id="hero">
+            <h1 id="title">RUAN LISBOA</h1>
+            <div class="subtitle">Arquiteto de Fronteiras | R&D Engineer| Pesquisador</div>
         </section>
 
-        <section class="panel">
-            <img src="img/home.png" alt="Interface LARA">
-            <p class="caption">Interface de controle central do sistema.</p>
+        <section class="section">
+            <p style="font-size: 1.8rem; font-style: italic; max-width: 700px; color: #ccc;">"A complexidade é apenas uma ignorância temporária das variáveis que compõem o sistema."</p>
         </section>
 
-        <section class="panel">
-            <img src="img/show.png" alt="Matriz de cues LARA">
-            <p class="caption" style="margin-left: -500px;">Matriz de automação e gerenciamento de cues.</p>
+        <section class="section">
+            <h2 style="font-family: 'Space Grotesk'; color: #ff4400;">Sobre</h2>
+            <p style="font-size: 1.2rem; max-width: 700px; color: #ccc; line-height: 1.6;">
+                Arquiteto de Fronteiras baseado em Ilhéus, atuo na interseção entre design, tecnologia e pesquisa. 
+                Busco a otimização técnica em automações, hardware e sistemas complexos. A tecnologia é minha extensão do pensamento lógico.
+            </p>
         </section>
-    </div>
-</div>
 
-    <section style="margin-left: 18%;" class="section">
-        <span class="label" style="border-color: #ff4400; color: #ff4400; margin-left: 31.5%;">PROJETO LARA</span>
-        <h2 style="font-family: 'Space Grotesk'; color: #ff4400; margin-bottom: 20px; margin-left: 19%;">Open Source & Desenvolvimento</h2>
-        <p style="font-size: 1.2rem; max-width: 800px; color: #ccc; line-height: 1.6;; ">
-        O LARA encontra-se em fase final de desenvolvimento. Meu compromisso é disponibilizar esta tecnologia 
-        <strong>gratuitamente para grupos e companhias culturais</strong> (teatro, dança e artes performáticas), 
-        atuando como uma ferramenta de fomento e suporte operacional. Acredito que a tecnologia deve ser 
-        um facilitador que remove barreiras técnicas, permitindo que a visão artística do palco se realize 
-        sem as limitações de sistemas complexos e inacessíveis.
-    </p>
-    </section>
+        <section class="section">
+            <span class="label" style="border-color: #ff4400; color: #ff4400;">SISTEMA EM DESTAQUE</span>
+            <h2 style="font-family: 'Space Grotesk'; color: #ff4400; margin-bottom: 20px;">LARA</h2>
+            <p style="font-size: 1.2rem; max-width: 800px; color: #ccc; line-height: 1.6;">
+                <strong>(Lighting, Audio, Render Automation)</strong> é um sistema integrado de controle de espetáculo, 
+                projetado para unificar diferentes softwares de luz, som e projeção em um único fluxo operacional. 
+                O sistema atua como uma camada de automação entre o operador e os softwares de execução, 
+                permitindo o disparo de cenas e estados de luz a partir de uma única interface. 
+                O LARA reduz a complexidade operacional, aumenta a confiabilidade em apresentações ao vivo 
+                e oferece uma base open source extensível para projetos artísticos e técnicos.
+            </p>
+        </section>
 
-      <section class="section">
-        <span class="label" style="border-color: #ff4400; color: #ff4400;">Serviços</span>
-        <h2 style="font-family: 'Space Grotesk'; color: #ff4400; margin-bottom: 20px;">Consultoria e Desenvolvimento</h2>
-        <p style="font-size: 1.2rem; max-width: 800px; color: #ccc; line-height: 1.6;">
-            Ofereço consultoria especializada em automação de sistemas ciberfísicos, integração de hardware e software, 
-            e desenvolvimento de soluções personalizadas para projetos artísticos e técnicos. 
-            Meu objetivo é fornecer suporte técnico que permita a realização de projetos complexos com eficiência e confiabilidade.
-    </p>
-    </section>
+        <div id="main-scroll-container">
+        
+    <div id="pin-lara">
+        <div class="pin-container" id="horizontal-wrapper-lara">
+            <section class="panel">
+                <span class="label">INFRAESTRUTURA TÉCNICA</span>
+                <h2>LARA: Conheça mais</h2>
+                <p style="max-width: 650px; margin-left: 5%;">O sistema de automação que unifica luz, som e vídeo em uma única interface. Otimizado para confiabilidade crítica e integração total.</p>
+            </section>
 
-    <div id="pin-projetos">
-        <div class="pin-container" id="horizontal-wrapper-projetos">
             <section class="panel">
-                <span class="label">PESQUISA & CIÊNCIA</span>
-                <h2>Frontier Science</h2>
-                <p>Modelagem lógica de sistemas complexos. Decifrando a natureza através da matemática computacional.</p>
+                <img src="img/home.png" alt="Interface LARA">
+                <p class="caption">Interface de controle central do sistema.</p>
             </section>
+
             <section class="panel">
-                <span class="label">ENGENHARIA & HARDWARE</span>
-                <h2>Sistemas Ciberfísicos</h2>
-                <p>Integração hardware e software. Automação de alta precisão, incluindo o sistema LARA.</p>
-            </section>
-            <section class="panel">
-                <span class="label">DADOS & AUTOMAÇÃO</span>
-                <h2>Dados & Inteligência</h2>
-                <p>Extração de verdade científica por meio de Redes Neurais. Transformo ruído em padrões.</p>
-            </section>
-            <section class="panel">
-                <h2>Avaliação de Projeto</h2>
-                <p>Utilizo um formulário para análise de viabilidade antes de assumir novos desafios.</p>
-                <a href="https://forms.gle/hAp8Kv16ofgu1XN27" class="cta-button">INICIAR LEVANTAMENTO TÉCNICO</a>
+                <img src="img/show.png" alt="Matriz de cues LARA">
+                <p class="caption" style="margin-left: -500px;">Matriz de automação e gerenciamento de cues.</p>
             </section>
         </div>
     </div>
 
-    <script>
-        gsap.registerPlugin(ScrollTrigger);
+        <section style="margin-left: 18%;" class="section">
+            <span class="label" style="border-color: #ff4400; color: #ff4400; margin-left: 31.5%;">PROJETO LARA</span>
+            <h2 style="font-family: 'Space Grotesk'; color: #ff4400; margin-bottom: 20px; margin-left: 19%;">Open Source & Desenvolvimento</h2>
+            <p style="font-size: 1.2rem; max-width: 800px; color: #ccc; line-height: 1.6;; ">
+                O LARA encontra-se em fase final de desenvolvimento. Meu compromisso é disponibilizar esta tecnologia 
+                <strong>gratuitamente para grupos e companhias culturais</strong> (teatro, dança e artes performáticas), 
+                atuando como uma ferramenta de fomento e suporte operacional. Acredito que a tecnologia deve ser 
+                um facilitador que remove barreiras técnicas, permitindo que a visão artística do palco se realize 
+                sem as limitações de sistemas complexos e inacessíveis.
+             </p>
+        </section>
 
-        // Zoom Out hero (sem travar)
-        gsap.to("#hero", {
-            scale: 0.9, opacity: 0,
-            scrollTrigger: { trigger: "#hero", start: "top top", end: "bottom top", scrub: 3 }
+        <section class="section">
+            <span class="label" style="border-color: #ff4400; color: #ff4400;">Serviços</span>
+            <h2 style="font-family: 'Space Grotesk'; color: #ff4400; margin-bottom: 20px;">Consultoria e Desenvolvimento</h2>
+            <p style="font-size: 1.2rem; max-width: 800px; color: #ccc; line-height: 1.6;">
+                Ofereço consultoria especializada em automação de sistemas ciberfísicos, integração de hardware e software, 
+                e desenvolvimento de soluções personalizadas para projetos artísticos e técnicos. 
+                Meu objetivo é fornecer suporte técnico que permita a realização de projetos complexos com eficiência e confiabilidade.
+        </p>
+        </section>
+
+        <div id="pin-projetos">
+            <div class="pin-container" id="horizontal-wrapper-projetos">
+                <section class="panel">
+                    <span class="label">PESQUISA & CIÊNCIA</span>
+                    <h2>Frontier Science</h2>
+                    <p>Modelagem lógica de sistemas complexos. Decifrando a natureza através da matemática computacional.</p>
+                </section>
+                <section class="panel">
+                    <span class="label">ENGENHARIA & HARDWARE</span>
+                    <h2>Sistemas Ciberfísicos</h2>
+                    <p>Integração hardware e software. Automação de alta precisão, incluindo o sistema LARA.</p>
+                </section>
+                <section class="panel">
+                    <span class="label">DADOS & AUTOMAÇÃO</span>
+                    <h2>Dados & Inteligência</h2>
+                    <p>Extração de verdade científica por meio de Redes Neurais. Transformo ruído em padrões.</p>
+                </section>
+                <section class="panel">
+                    <h2>Avaliação de Projeto</h2>
+                    <p>Utilizo um formulário para análise de viabilidade antes de assumir novos desafios.</p>
+                    <a href="https://forms.gle/hAp8Kv16ofgu1XN27" class="cta-button">INICIAR LEVANTAMENTO TÉCNICO</a>
+                </section>
+            </div>
+        </div>
+
+        <script>
+            gsap.registerPlugin(ScrollTrigger);
+
+            // Zoom Out hero (sem travar)
+            gsap.to("#hero", {
+                scale: 0.9, opacity: 0,
+                scrollTrigger: { trigger: "#hero", start: "top top", end: "bottom top", scrub: 3 }
+            });
+
+            // LARA HORIZONTAL
+        let laraPanels = gsap.utils.toArray("#horizontal-wrapper-lara .panel");
+        gsap.to(laraPanels, {
+            xPercent: -100 * (laraPanels.length - 1),
+            ease: "none",
+            scrollTrigger: {
+                trigger: "#pin-lara",
+                pin: true,
+                scrub: 2,
+                start: "top top",
+                end: "+=4000"
+            }
         });
 
-        // LARA HORIZONTAL
-    let laraPanels = gsap.utils.toArray("#horizontal-wrapper-lara .panel");
-    gsap.to(laraPanels, {
-        xPercent: -100 * (laraPanels.length - 1),
-        ease: "none",
-        scrollTrigger: {
-            trigger: "#pin-lara",
-            pin: true,
-            scrub: 2,
-            start: "top top",
-            end: "+=4000"
-        }
-    });
+        // PROJETOS HORIZONTAL
+        let projPanels = gsap.utils.toArray("#horizontal-wrapper-projetos .panel");
+        gsap.to(projPanels, {
+            xPercent: -100 * (projPanels.length - 1),
+            ease: "none",
+            scrollTrigger: {
+                trigger: "#pin-projetos",
+                pin: true,
+                scrub: 2,
+                start: "top top",
+                end: "+=3000"
+            }
+        });
 
-    // PROJETOS HORIZONTAL
-    let projPanels = gsap.utils.toArray("#horizontal-wrapper-projetos .panel");
-    gsap.to(projPanels, {
-        xPercent: -100 * (projPanels.length - 1),
-        ease: "none",
-        scrollTrigger: {
-            trigger: "#pin-projetos",
-            pin: true,
-            scrub: 2,
-            start: "top top",
-            end: "+=3000"
-        }
-    });
+        const orangeGrid = document.querySelector('.orange-grid');
+        let maskPoints = [];
 
-    </script>
-</body>
-</html>
+        // Ajuste: Aumentei um pouco a captura para suavizar a curva
+        hero.addEventListener('mousemove', (e) => {
+            maskPoints.push({ 
+                x: e.clientX, 
+                y: e.clientY, 
+                time: Date.now(),
+                // Adiciona aleatoriedade no tamanho das elipses para fugir do círculo perfeito
+                w: 20 + Math.random() * 150, 
+                h: 20 + Math.random() * 80,
+                // Intensidade variável para criar o efeito de "linhas passando"
+                intensity: 5.4 + Math.random() * 1.6 
+            });
+        });
+
+        function updateMask() {
+            const now = Date.now();
+            // Aumentei para 800ms para um rastro mais longo e fluido
+            maskPoints = maskPoints.filter(p => now - p.time < 600);
+
+            const gradients = maskPoints.map(p => {
+                const age = (now - p.time) / 600;
+                const opacity = (1 - age) * p.intensity;
+                // Uso de 'ellipse' em vez de 'circle'
+                return `radial-gradient(ellipse ${p.w}px ${p.h}px at ${p.x}px ${p.y}px, rgba(0,0,0,${opacity}), transparent)`;
+            }).join(', ');
+
+            orangeGrid.style.webkitMaskImage = gradients;
+            orangeGrid.style.maskImage = gradients;
+
+            requestAnimationFrame(updateMask);
+        }
+        updateMask();
+
+        </script>
+    </body>
+    </html>
