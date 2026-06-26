@@ -68,15 +68,6 @@
                 max-width: 40%;     /* Mantém a largura do texto igual à da imagem */
             }
 
-            #trail-container {
-            position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            pointer-events: none;
-            z-index: 1;
-            overflow: hidden;
-            isolation: isolate;
-            }
 
             .orange-grid {
                 position: fixed;
@@ -95,17 +86,6 @@
                 -webkit-mask-image: radial-gradient(circle 100px at -100px -100px, black, transparent);
             }
 
-            .trail-dot {
-                position: absolute;
-                width: 60px;
-                height: 60px;
-                border-radius: 50%;
-                background: rgba(255, 68, 0, 0.3); /* Cor do rastro */
-                filter: blur(30px);
-                pointer-events: none;
-                transform: translate(-50%, -50%);
-                z-index: 2; /* Fica acima do grid para dar destaque */
-            }
             
         </style>
     </head>
@@ -167,16 +147,16 @@
         </div>
     </div>
 
-        <section style="margin-left: 18%;" class="section">
-            <span class="label" style="border-color: #ff4400; color: #ff4400; margin-left: 31.5%;">PROJETO LARA</span>
-            <h2 style="font-family: 'Space Grotesk'; color: #ff4400; margin-bottom: 20px; margin-left: 19%;">Open Source & Desenvolvimento</h2>
+        <section class="section">
+            <span class="label" style="border-color: #ff4400; color: #ff4400;">PROJETO LARA</span>
+            <h2 style="font-family: 'Space Grotesk'; color: #ff4400; margin-bottom: 20px;">Open Source & Desenvolvimento</h2>
             <p style="font-size: 1.2rem; max-width: 800px; color: #ccc; line-height: 1.6;; ">
-                O LARA encontra-se em fase final de desenvolvimento. Meu compromisso é disponibilizar esta tecnologia 
-                <strong>gratuitamente para grupos e companhias culturais</strong> (teatro, dança e artes performáticas), 
-                atuando como uma ferramenta de fomento e suporte operacional. Acredito que a tecnologia deve ser 
-                um facilitador que remove barreiras técnicas, permitindo que a visão artística do palco se realize 
-                sem as limitações de sistemas complexos e inacessíveis.
-             </p>
+            O LARA encontra-se em fase final de desenvolvimento. Meu compromisso é disponibilizar esta tecnologia 
+            <strong>gratuitamente para grupos e companhias culturais</strong> (teatro, dança e artes performáticas), 
+            atuando como uma ferramenta de fomento e suporte operacional. Acredito que a tecnologia deve ser 
+            um facilitador que remove barreiras técnicas, permitindo que a visão artística do palco se realize 
+            sem as limitações de sistemas complexos e inacessíveis.
+        </p>
         </section>
 
         <section class="section">
