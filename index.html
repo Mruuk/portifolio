@@ -1,272 +1,652 @@
-    <!DOCTYPE html>
-    <html lang="pt-br">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Ruan Lisboa | Arquiteto de Fronteiras</title>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-        <style>
-            @import url('https://fonts.googleapis.com/css2?family=Inter:wght@200;400;700&family=Space+Grotesk:wght@300;500&display=swap');
-            
-            body { margin: 0; background: radial-gradient(circle at 50% 50%, #151515 0%, #050505 100%); color: #fff; font-family: 'Inter', sans-serif; overflow-x: hidden; }
-            
-            .background-grid {
-                position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-                background-image: linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px), 
-                                linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
-                background-size: 50px 50px; pointer-events: none; z-index: 0;
-            }
-            /* Ajuste de Margem: Container com respiro */
-            .section { min-height: 80vh; display: flex; flex-direction: column; justify-content: center; align-items: flex-start; padding: 100px 10%; }
-            
-            /* Nome com margem */
-            .hero { height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: flex-start; padding-left: 10%; }
-            .hero h1 { font-family: 'Space Grotesk', sans-serif; font-size: 4rem; margin: 0; line-height: 1; }
-            .subtitle { color: #ff4400; font-family: 'JetBrains Mono', monospace; margin-top: 20px; letter-spacing: 2px; }
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Arquiteto de Fronteiras</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap');
 
-            /* Projetos */
-            .pin-container { height: 100vh; display: flex; align-items: center; }
-            .panel { min-width: 100vw; height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: flex-start; padding: 0 10%; }
-            
-            .label { font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; color: #ff4400; letter-spacing: 3px; margin-bottom: 20px; text-transform: uppercase; border: 1px solid #ff4400; padding: 6px 14px; border-radius: 20px; }
-            .panel h2 { font-family: 'Space Grotesk', sans-serif; font-size: 3rem; color: #ff4400; margin: 0 0 20px 0; }
-            .panel p { font-size: 1.2rem; max-width: 600px; color: #aaa; line-height: 1.6; }
-            
-            .cta-button { margin-top: 40px; padding: 15px 30px; background: #ff4400; color: #fff; text-decoration: none; font-weight: bold; border-radius: 4px; }
-            
-            .panel {
-                min-width: 100vw;
-                height: 100vh;
-                display: flex;
-                flex-direction: column;
-                justify-content: center; /* Centraliza verticalmente no viewport */
-                align-items: center;     /* Centraliza horizontalmente (isso alinha imagem e texto) */
-                padding: 0 10%;
-            }
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --o:#ff4400;
+  --o2:rgba(255,68,0,.12);
+  --o3:rgba(255,68,0,.04);
+  --bg:#060606;
+  --s1:#0c0c0c;
+  --s2:#111;
+  --border:rgba(255,68,0,.18);
+  --t:#ebebeb;
+  --tm:#777;
+  --td:#444;
+  --mono:'Space Mono',monospace;
+  --sans:'Space Grotesk',sans-serif;
+}
+html{background:var(--bg);scroll-behavior:auto}
+body{font-family:var(--sans);color:var(--t);background:var(--bg);overflow-x:hidden;cursor:none}
 
-            .panel img {
-                max-width: 80vh;    /* Limita o tamanho, mas não distorce */
-                max-height: 80vh;  /* Garante que não fique gigante em telas altas */
-                object-fit: contain; /* Isso é o segredo: mantém a proporção original */
-                border-radius: 30px;
-                box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-                display: block;
-                margin: 0 auto 20px auto;
-            }
-            /* Seleciona o segundo painel dentro do wrapper do LARA */
-            #horizontal-wrapper-lara .panel:nth-child(3) img {
-                margin-left: -300px; /* Ajuste este valor conforme a proximidade desejada */
-                margin-right: 0;   /* Garante que o alinhamento não seja forçado para a direita */
-            }
+/* CURSOR */
+#cur,#cur2{position:fixed;top:0;left:0;pointer-events:none;z-index:9999;border-radius:50%;transform:translate(-50%,-50%)}
+#cur{width:8px;height:8px;background:var(--o)}
+#cur2{width:32px;height:32px;border:1px solid var(--o);opacity:.5;z-index:9998;transition:width .3s,height .3s,opacity .3s}
 
-            .panel .caption {
-                font-size: 0.9rem;
-                color: #666;
-                text-align: center; /* Garante que o texto fique centralizado abaixo da imagem */
-                font-family: 'JetBrains Mono', monospace;
-                max-width: 40%;     /* Mantém a largura do texto igual à da imagem */
-            }
+/* LOADER */
+#loader{position:fixed;inset:0;z-index:9000;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:24px}
+#loader-word{font-family:var(--mono);font-size:clamp(32px,5vw,64px);color:var(--t);letter-spacing:-.02em;overflow:hidden}
+#loader-word span{display:block;transform:translateY(100%)}
+#loader-bar-wrap{width:200px;height:1px;background:var(--td)}
+#loader-bar{height:100%;width:0%;background:var(--o);transition:width .05s linear}
+#loader-pct{font-family:var(--mono);font-size:11px;color:var(--o);letter-spacing:.15em}
 
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:500;padding:28px 48px;display:flex;justify-content:space-between;align-items:center;mix-blend-mode:normal}
+.nav-l{font-family:var(--mono);font-size:11px;letter-spacing:.18em;color:var(--o);text-transform:uppercase;text-decoration:none}
+.nav-r{display:flex;gap:40px;list-style:none}
+.nav-r a{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--tm);text-decoration:none;transition:color .2s}
+.nav-r a:hover{color:var(--o)}
 
-            .orange-grid {
-                position: fixed;
-                top: 0; left: 0;
-                width: 100%; height: 100%;
-                pointer-events: none;
-                z-index: -1;
-                opacity: 1; /* O grid fica visível */
-                
-                background-image: linear-gradient(rgba(255, 68, 0, 0.8) 1px, transparent 1px), 
-                                linear-gradient(90deg, rgba(255, 68, 0, 0.8) 1px, transparent 1px);
-                background-size: 50px 50px;
-                
-                /* O Grid inteiro fica "mascarado" por padrão, ele só aparece onde desenharmos */
-                mask-image: radial-gradient(circle 100px at -100px -100px, black, transparent);
-                -webkit-mask-image: radial-gradient(circle 100px at -100px -100px, black, transparent);
-            }
+/* ── HERO ───────────────────────────────────── */
+#hero{position:relative;height:100vh;overflow:hidden;display:flex;flex-direction:column;justify-content:flex-end;padding:0 48px 64px}
+.hero-noise{position:absolute;inset:0;pointer-events:none;opacity:.04;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");background-size:180px}
+.hero-scan{position:absolute;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--o),transparent);opacity:.3;animation:hscan 6s ease-in-out infinite}
+@keyframes hscan{0%{top:0%;opacity:0}20%{opacity:.3}80%{opacity:.3}100%{top:100%;opacity:0}}
 
-            
-        </style>
-    </head>
-    <body>
-        <div class="background-grid"></div>
-        <div class="orange-grid"></div> 
-        <div id="trail-container"></div>
-        
+.hero-eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.2em;color:var(--o);text-transform:uppercase;margin-bottom:24px;display:flex;align-items:center;gap:14px;overflow:hidden}
+.hero-eyebrow-inner{transform:translateY(100%)}
+.hero-eyebrow::before{content:'';width:28px;height:1px;background:var(--o);flex-shrink:0}
 
-        <section class="hero" id="hero">
-            <h1 id="title">RUAN LISBOA</h1>
-            <div class="subtitle">Arquiteto de Fronteiras | R&D Engineer| Pesquisador</div>
-        </section>
+.hero-title{font-size:clamp(72px,11.5vw,180px);font-weight:700;line-height:.88;letter-spacing:-.04em;overflow:hidden;margin-bottom:0}
+.hero-title .line{display:block;overflow:hidden}
+.hero-title .line-inner{display:block;transform:translateY(110%)}
+.hero-title em{font-style:normal;color:var(--o);display:inline-block}
 
-        <section class="section">
-            <p style="font-size: 1.8rem; font-style: italic; max-width: 700px; color: #ccc;">"A complexidade é apenas uma ignorância temporária das variáveis que compõem o sistema."</p>
-        </section>
+/* floating tag */
+.hero-tag{position:absolute;top:44%;right:48px;font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--tm);writing-mode:vertical-rl;opacity:0}
 
-        <section class="section">
-            <h2 style="font-family: 'Space Grotesk'; color: #ff4400;">Sobre</h2>
-            <p style="font-size: 1.2rem; max-width: 700px; color: #ccc; line-height: 1.6;">
-                Arquiteto de Fronteiras baseado em Ilhéus, atuo na interseção entre design, tecnologia e pesquisa. 
-                Busco a otimização técnica em automações, hardware e sistemas complexos. A tecnologia é minha extensão do pensamento lógico.
-            </p>
-        </section>
+/* side meta */
+.hero-meta{position:absolute;top:50%;left:48px;transform:translateY(-50%);display:flex;flex-direction:column;gap:4px;opacity:0}
+.hero-meta span{font-family:var(--mono);font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--td)}
+.hero-meta strong{font-family:var(--mono);font-size:10px;color:var(--o);font-weight:400;letter-spacing:.1em}
 
-        <section class="section">
-            <span class="label" style="border-color: #ff4400; color: #ff4400;">SISTEMA EM DESTAQUE</span>
-            <h2 style="font-family: 'Space Grotesk'; color: #ff4400; margin-bottom: 20px;">LARA</h2>
-            <p style="font-size: 1.2rem; max-width: 800px; color: #ccc; line-height: 1.6;">
-                <strong>(Lighting, Audio, Render Automation)</strong> é um sistema integrado de controle de espetáculo, 
-                projetado para unificar diferentes softwares de luz, som e projeção em um único fluxo operacional. 
-                O sistema atua como uma camada de automação entre o operador e os softwares de execução, 
-                permitindo o disparo de cenas e estados de luz a partir de uma única interface. 
-                O LARA reduz a complexidade operacional, aumenta a confiabilidade em apresentações ao vivo 
-                e oferece uma base open source extensível para projetos artísticos e técnicos.
-            </p>
-        </section>
+/* scroll indicator */
+.hero-scroll{position:absolute;bottom:64px;right:48px;display:flex;align-items:center;gap:12px;font-family:var(--mono);font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--td);opacity:0}
+.hero-scroll-line{width:40px;height:1px;background:var(--o);transform-origin:right;animation:scrollLine 2.4s ease infinite}
+@keyframes scrollLine{0%,100%{transform:scaleX(1);opacity:.4}50%{transform:scaleX(.4);opacity:1}}
 
-        <div id="main-scroll-container">
-        
-    <div id="pin-lara">
-        <div class="pin-container" id="horizontal-wrapper-lara">
-            <section class="panel">
-                <span class="label">INFRAESTRUTURA TÉCNICA</span>
-                <h2>LARA: Conheça mais</h2>
-                <p style="max-width: 650px; margin-left: 5%;">O sistema de automação que unifica luz, som e vídeo em uma única interface. Otimizado para confiabilidade crítica e integração total.</p>
-            </section>
+/* bottom lema */
+.hero-lema{font-family:var(--mono);font-size:12px;line-height:1.7;color:var(--td);max-width:500px;border-left:1px solid var(--border);padding-left:20px;opacity:0}
 
-            <section class="panel">
-                <img src="img/home.png" alt="Interface LARA">
-                <p class="caption">Interface de controle central do sistema.</p>
-            </section>
+/* ── MARQUEE ── */
+.marquee-wrap{overflow:hidden;background:var(--o);padding:16px 0}
+.marquee-track{display:flex;gap:0;width:max-content;animation:marqueeRun 18s linear infinite}
+@keyframes marqueeRun{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+.marquee-item{font-family:var(--mono);font-size:13px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--bg);white-space:nowrap;padding:0 32px}
+.marquee-sep{color:rgba(0,0,0,.3);padding:0 8px}
 
-            <section class="panel">
-                <img src="img/show.png" alt="Matriz de cues LARA">
-                <p class="caption" style="margin-left: -500px;">Matriz de automação e gerenciamento de cues.</p>
-            </section>
-        </div>
+/* ── STATEMENT / SOBRE ── */
+#sobre{padding:160px 48px;position:relative}
+.sobre-grid{display:grid;grid-template-columns:1fr 1fr;gap:120px;align-items:start}
+.sobre-left{padding:0 48px;}
+.sec-label{font-family:var(--mono);font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--o);margin-bottom:32px;display:flex;align-items:center;gap:12px}
+.sec-label::before{content:'';width:20px;height:1px;background:var(--o)}
+.sobre-title{font-size:clamp(40px,5vw,68px);font-weight:700;letter-spacing:-.03em;line-height:1;margin-bottom:0}
+.sobre-title em{font-style:normal;color:var(--o)}
+.sobre-right{padding-top:80px}
+.sobre-desc{font-size:16px;line-height:1.85;color:var(--td);margin-bottom:48px}
+.chip-row{display:flex;flex-wrap:wrap;gap:8px}
+.chip{font-family:var(--mono);font-size:10px;letter-spacing:.1em;border:1px solid var(--border);padding:8px 14px;color:var(--tm);transition:all .25s}
+.chip:hover{border-color:var(--o);color:var(--o);background:var(--o2)}
+
+/* ── LARA HERO ── */
+#lara{position:relative;min-height:100vh;background:var(--s1);overflow:hidden;display:flex;align-items:center;padding:100px 52px}
+.lara-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(255,68,0,.022) 1px,transparent 1px),linear-gradient(90deg,rgba(255,68,0,.022) 1px,transparent 1px);background-size:52px 52px;pointer-events:none}
+.lara-glow{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:700px;height:700px;background:radial-gradient(circle,rgba(255,68,0,.055),transparent 68%);pointer-events:none}
+.lara-i{position:relative;z-index:2;width:100%}
+.lara-badge{display:inline-flex;align-items:center;gap:10px;font-family:var(--mono);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--o);border:1px solid var(--o);padding:8px 16px;margin-bottom:36px}
+.lara-badge::before{content:'';width:6px;height:6px;background:var(--o);border-radius:50%;animation:blink 1.4s ease infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.12}}
+.lara-name{font-size:clamp(90px,17vw,260px);font-weight:700;letter-spacing:-.05em;line-height:.88;overflow:hidden}
+.lara-name-i{display:block;transform:translateY(110%)}
+.lara-sub{font-family:var(--mono);font-size:13px;letter-spacing:.18em;color:var(--tm);margin:14px 0 44px}
+.lara-sub span{color:var(--o)}
+.lara-cols{display:flex;gap:80px;align-items:flex-start;flex-wrap:wrap}
+.lara-desc{font-size:15px;line-height:1.88;color:var(--tm);max-width:500px}
+.lara-stats{display:flex;flex-direction:column;gap:22px}
+.ls-val{font-family:var(--mono);font-size:26px;font-weight:700;color:var(--o)}
+.ls-lbl{font-family:var(--mono);font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--td)}
+.lara-nota{margin-top:32px;font-family:var(--mono);font-size:11px;color:var(--tm);line-height:1.7;max-width:500px;padding:20px;border:1px solid var(--bd);border-left:2px solid var(--o)}
+.lara-nota strong{color:var(--o);font-weight:400}
+
+/* ── LARA FOTOS ── */
+#lara-photos{background:var(--bg);padding:72px 52px 100px;overflow:hidden}
+.photos-lbl{font-family:var(--mono);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--o);margin-bottom:36px;display:flex;align-items:center;gap:12px}
+.photos-lbl::before{content:'';width:18px;height:1px;background:var(--o)}
+.ph-wrap{overflow:hidden;cursor:grab}
+.ph-wrap:active{cursor:grabbing}
+.ph-track{display:flex;gap:14px;width:max-content;user-select:none}
+.ph-card{flex-shrink:0;background:var(--s2);border:1px solid var(--bd);position:relative;overflow:hidden;transition:border-color .3s}
+.ph-card:hover{border-color:var(--o)}
+.ph-scan{position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--o),transparent);opacity:.45;animation:scan 4.5s ease-in-out infinite}
+@keyframes scan{0%{top:0;opacity:0}8%{opacity:.45}92%{opacity:.45}100%{top:100%;opacity:0}}
+.ph-corner{position:absolute;top:10px;left:10px;width:14px;height:14px;border-top:1px solid var(--o);border-left:1px solid var(--o);opacity:.55}
+.ph-corner.br{top:auto;left:auto;bottom:10px;right:10px;border-top:none;border-left:none;border-bottom:1px solid var(--o);border-right:1px solid var(--o)}
+.ph-lbl{position:absolute;bottom:18px;left:18px;font-family:var(--mono);font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--o);opacity:.65}
+.ph-ph{display:flex;align-items:center;justify-content:center;height:100%;flex-direction:column;gap:8px;padding:20px;text-align:center}
+.ph-ph p{font-family:var(--mono);font-size:9px;color:var(--td);letter-spacing:.1em;line-height:1.6}
+
+/* ── LARA OS ── */
+#lara-dist{padding:140px 52px;background:var(--s1)}
+.dist-g{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center}
+.dist-title{font-size:clamp(38px,5vw,68px);font-weight:700;letter-spacing:-.03em;line-height:1;margin-bottom:28px}
+.dist-title em{font-style:normal;color:var(--o)}
+.dist-desc{font-size:15px;line-height:1.88;color:var(--tm);margin-bottom:36px}
+.dist-tags{display:flex;flex-wrap:wrap;gap:9px}
+.dtag{font-family:var(--mono);font-size:10px;letter-spacing:.07em;background:var(--o2);color:var(--o);padding:6px 12px}
+.terminal{background:var(--bg);border:1px solid var(--bd);padding:30px;position:relative}
+.terminal::before{content:'LARA // status';position:absolute;top:-1px;left:18px;background:var(--bg);font-family:var(--mono);font-size:9px;color:var(--o);padding:0 8px;border:1px solid var(--bd);border-bottom:none;transform:translateY(-100%)}
+.tl{font-family:var(--mono);font-size:12px;line-height:2.15;color:var(--tm)}
+.tp{color:var(--o)}.tg{color:#4ade80}.tw{color:var(--t)}.td{color:var(--td)}
+.tc{animation:tcb .6s steps(1) infinite}
+@keyframes tcb{50%{opacity:0}}
+
+/* ── FUNÇÕES / SERVIÇOS ── */
+#funcoes{padding:160px 48px;background:var(--bg)}
+.funcoes-head{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:80px}
+.funcoes-title{font-size:clamp(40px,5.5vw,80px);font-weight:700;letter-spacing:-.03em;line-height:.95}
+.funcoes-title em{font-style:normal;color:var(--o)}
+.funcoes-sub{font-family:var(--mono);font-size:11px;color:var(--td);letter-spacing:.12em;max-width:220px;text-align:right;line-height:1.7}
+.cards-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border)}
+.card{background:var(--bg);padding:56px 40px;position:relative;overflow:hidden;transition:background .3s}
+.card::after{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--o);transform:scaleX(0);transform-origin:left;transition:transform .5s ease}
+.card:hover{background:var(--s1)}
+.card:hover::after{transform:scaleX(1)}
+.card-num{font-family:var(--mono);font-size:11px;letter-spacing:.18em;color:var(--o);margin-bottom:40px}
+.card-cat{font-family:var(--mono);font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--td);margin-bottom:12px}
+.card-title{font-size:26px;font-weight:700;line-height:1.15;margin-bottom:20px;letter-spacing:-.02em}
+.card-desc{font-size:13px;line-height:1.8;color:var(--td)}
+
+/* ── CONSULTORIA ── */
+#consultoria{padding:160px 48px;background:var(--s1)}
+.consul-grid{display:grid;grid-template-columns:1fr 1fr;gap:100px;align-items:start}
+.consul-title{font-size:clamp(40px,5vw,72px);font-weight:700;letter-spacing:-.03em;line-height:1;margin-bottom:32px}
+.consul-title em{font-style:normal;color:var(--o)}
+.consul-desc{font-size:16px;line-height:1.85;color:var(--td);margin-bottom:56px}
+.feats{display:flex;flex-direction:column;gap:0}
+.feat{padding:28px 0;border-bottom:1px solid rgba(255,68,0,.1);display:flex;gap:20px;align-items:flex-start}
+.feat-dot{width:6px;height:6px;background:var(--o);border-radius:50%;flex-shrink:0;margin-top:7px}
+.feat h4{font-size:15px;font-weight:600;margin-bottom:6px}
+.feat p{font-size:13px;color:var(--td);line-height:1.65}
+.consul-right{padding-top:80px}
+.info-block{background:var(--bg);border:1px solid var(--border);padding:40px;margin-bottom:24px}
+.info-block-label{font-family:var(--mono);font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--o);margin-bottom:20px}
+.info-block p{font-family:var(--mono);font-size:12px;line-height:2;color:var(--tm)}
+.info-block strong{color:var(--o);font-weight:400}
+
+/* ── CTA ── */
+#cta{min-height:100vh;background:var(--bg);display:flex;align-items:center;justify-content:center;padding:120px 48px;text-align:center;position:relative;overflow:hidden}
+.cta-glow{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:800px;height:800px;background:radial-gradient(circle,rgba(255,68,0,.07),transparent 65%);pointer-events:none}
+.cta-content{position:relative;z-index:2;max-width:900px}
+.cta-eyebrow{font-family:var(--mono);font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--o);margin-bottom:40px;display:flex;align-items:center;justify-content:center;gap:14px}
+.cta-eyebrow::before,.cta-eyebrow::after{content:'';width:24px;height:1px;background:var(--o)}
+.cta-title{font-size:clamp(56px,9vw,140px);font-weight:700;letter-spacing:-.04em;line-height:.88;margin-bottom:48px}
+.cta-title em{font-style:normal;color:var(--o)}
+.cta-sub{font-size:16px;line-height:1.8;color:var(--td);max-width:520px;margin:0 auto 64px}
+.btn{display:inline-flex;align-items:center;gap:16px;background:var(--o);color:var(--bg);font-family:var(--sans);font-weight:600;font-size:15px;letter-spacing:.04em;padding:20px 48px;text-decoration:none;transition:all .25s;position:relative;overflow:hidden;cursor:none;border:none}
+.btn::before{content:'';position:absolute;inset:0;background:rgba(255,255,255,.15);transform:translateX(-100%);transition:transform .3s}
+.btn:hover::before{transform:translateX(0)}
+.btn:hover{transform:translateY(-3px);box-shadow:0 20px 60px rgba(255,68,0,.3)}
+.btn-arr{transition:transform .25s}
+.btn:hover .btn-arr{transform:translateX(5px)}
+.cta-note{margin-top:24px;font-family:var(--mono);font-size:10px;color:var(--td);letter-spacing:.1em}
+
+/* ── FOOTER ── */
+footer{background:var(--s1);padding:80px 48px 48px;border-top:1px solid var(--border)}
+.footer-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:80px}
+.footer-brand{font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--o);margin-bottom:8px}
+.footer-tagline{font-family:var(--mono);font-size:10px;color:var(--td);letter-spacing:.08em;max-width:300px;line-height:1.7}
+.footer-links{display:flex;gap:40px}
+.footer-links a{font-family:var(--mono);font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--tm);text-decoration:none;transition:color .2s}
+.footer-links a:hover{color:var(--o)}
+.footer-bottom{display:flex;justify-content:space-between;align-items:center;border-top:1px solid rgba(255,68,0,.1);padding-top:32px}
+.footer-copy{font-family:var(--mono);font-size:9px;color:var(--td);letter-spacing:.12em}
+.footer-loc{font-family:var(--mono);font-size:9px;color:var(--td);letter-spacing:.12em}
+.footer-loc span{color:var(--o)}
+
+/* UTILS */
+.overflow-h{overflow:hidden}
+.reveal{opacity:0;transform:translateY(36px)}
+.reveal-l{opacity:0;transform:translateX(-36px)}
+.reveal-r{opacity:0;transform:translateX(36px)}
+</style>
+</head>
+<body>
+
+<!-- LOADER -->
+<div id="loader">
+  <div id="loader-word"><span id="loader-text">SISTEMA</span></div>
+  <div id="loader-bar-wrap"><div id="loader-bar"></div></div>
+  <div id="loader-pct" id="loader-pct">0%</div>
+</div>
+
+<!-- CURSOR -->
+<div id="cur"></div>
+<div id="cur2"></div>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-l" href="#">AFX // Arquiteto</a>
+  <ul class="nav-r">
+    <li><a href="#sobre">Sobre</a></li>
+    <li><a href="#lara">LARA</a></li>
+    <li><a href="#funcoes">Serviços</a></li>
+    <li><a href="#cta">Projeto</a></li>
+  </ul>
+</nav>
+
+<!-- ── HERO ── -->
+<section id="hero">
+  <div class="hero-noise"></div>
+  <div class="hero-scan"></div>
+
+  <div class="hero-meta">
+    <span>Localização</span>
+    <strong>Ilhéus, BA</strong>
+    <span style="margin-top:12px">Status</span>
+    <strong style="color:#4ade80">Disponível</strong>
+  </div>
+
+  <div class="hero-tag">R&D Engineer · Pesquisador · Arquiteto</div>
+
+  <div class="hero-eyebrow"><span class="hero-eyebrow-inner">Arquiteto de Fronteiras</span></div>
+
+  <h1 class="hero-title">
+    <span class="line"><span class="line-inner">Sistemas</span></span>
+    <span class="line"><span class="line-inner">que <em>pensam</em></span></span>
+    <span class="line"><span class="line-inner">por si.</span></span>
+  </h1>
+
+  <div class="hero-scroll">Scroll <div class="hero-scroll-line"></div></div>
+
+  <div style="margin-top:64px">
+    <p class="hero-lema">"A complexidade é apenas uma ignorância temporária das variáveis que compõem o sistema."</p>
+  </div>
+</section>
+
+<!-- ── MARQUEE ── -->
+<div class="marquee-wrap">
+  <div class="marquee-track">
+    <span class="marquee-item">Automação <span class="marquee-sep">✦</span></span>
+    <span class="marquee-item">Sistemas Ciberfísicos <span class="marquee-sep">✦</span></span>
+    <span class="marquee-item">LARA System <span class="marquee-sep">✦</span></span>
+    <span class="marquee-item">R&D Engineering <span class="marquee-sep">✦</span></span>
+    <span class="marquee-item">Redes Neurais <span class="marquee-sep">✦</span></span>
+    <span class="marquee-item">Hardware Integration <span class="marquee-sep">✦</span></span>
+    <span class="marquee-item">Frontier Science <span class="marquee-sep">✦</span></span>
+    <span class="marquee-item">Automação <span class="marquee-sep">✦</span></span>
+    <span class="marquee-item">Sistemas Ciberfísicos <span class="marquee-sep">✦</span></span>
+    <span class="marquee-item">LARA System <span class="marquee-sep">✦</span></span>
+    <span class="marquee-item">R&D Engineering <span class="marquee-sep">✦</span></span>
+    <span class="marquee-item">Redes Neurais <span class="marquee-sep">✦</span></span>
+    <span class="marquee-item">Hardware Integration <span class="marquee-sep">✦</span></span>
+    <span class="marquee-item">Frontier Science <span class="marquee-sep">✦</span></span>
+  </div>
+</div>
+
+<!-- ── SOBRE ── -->
+<section id="sobre">
+  <div class="sobre-grid">
+    <div class="sobre-left">
+      <div class="sec-label reveal">— 01 / Sobre</div>
+      <h2 class="sobre-title reveal">
+        Na interseção<br>entre <em>design</em>,<br>tecnologia<br>e pesquisa.
+      </h2>
     </div>
+    <div class="sobre-right">
+      <p class="sobre-desc reveal">
+        Arquiteto de Fronteiras baseado em Ilhéus. Atuo onde a lógica encontra a criatividade — otimizando sistemas ciberfísicos, automações e hardware de alta complexidade. A tecnologia não é ferramenta, é extensão do pensamento lógico.
+      </p>
+      <div class="chip-row reveal">
+        <div class="chip">Automação</div>
+        <div class="chip">Sistemas Ciberfísicos</div>
+        <div class="chip">Hardware</div>
+        <div class="chip">Redes Neurais</div>
+        <div class="chip">Pesquisa Científica</div>
+        <div class="chip">Artes Performáticas</div>
+      </div>
+    </div>
+  </div>
+</section>
 
-     <section style="margin-left: 18%;" class="section">
-            <span class="label" style="border-color: #ff4400; color: #ff4400; margin-left: 31.5%;">PROJETO LARA</span>
-            <h2 style="font-family: 'Space Grotesk'; color: #ff4400; margin-bottom: 20px; margin-left: 19%;">Open Source & Desenvolvimento</h2>
-            <p style="font-size: 1.2rem; max-width: 800px; color: #ccc; line-height: 1.6;; ">
-                O LARA encontra-se em fase final de desenvolvimento. Meu compromisso é disponibilizar esta tecnologia 
-                <strong>gratuitamente para grupos e companhias culturais</strong> (teatro, dança e artes performáticas), 
-                atuando como uma ferramenta de fomento e suporte operacional. Acredito que a tecnologia deve ser 
-                um facilitador que remove barreiras técnicas, permitindo que a visão artística do palco se realize 
-                sem as limitações de sistemas complexos e inacessíveis.
-            </p>
-    </section>
-
-        <section class="section">
-            <span class="label" style="border-color: #ff4400; color: #ff4400;">Serviços</span>
-            <h2 style="font-family: 'Space Grotesk'; color: #ff4400; margin-bottom: 20px;">Consultoria e Desenvolvimento</h2>
-            <p style="font-size: 1.2rem; max-width: 800px; color: #ccc; line-height: 1.6;">
-                Ofereço consultoria especializada em automação de sistemas ciberfísicos, integração de hardware e software, 
-                e desenvolvimento de soluções personalizadas para projetos artísticos e técnicos. 
-                Meu objetivo é fornecer suporte técnico que permita a realização de projetos complexos com eficiência e confiabilidade.
+<!-- ── LARA ── -->
+<section id="lara">
+  <div class="lara-grid"></div>
+  <div class="lara-glow"></div>
+  <div class="lara-i">
+    <div class="lara-badge rv">Sistema em Destaque</div>
+    <div class="lara-name oh"><span class="lara-name-i">LARA</span></div>
+    <p class="lara-sub rv">
+      <span>L</span>ighting, <span>A</span>udio, <span>R</span>ender <span>A</span>utomation
+    </p>
+    <div class="lara-cols">
+      <div>
+        <p class="lara-desc rv">
+          Sistema integrado de controle de espetáculo que unifica luz, som e projeção em um único fluxo operacional. Atua como camada de automação entre o operador e os softwares de execução — reduzindo complexidade operacional e aumentando confiabilidade em apresentações ao vivo.
         </p>
-        </section>
-
-        <div id="pin-projetos">
-            <div class="pin-container" id="horizontal-wrapper-projetos">
-                <section class="panel">
-                    <span class="label">PESQUISA & CIÊNCIA</span>
-                    <h2>Frontier Science</h2>
-                    <p>Modelagem lógica de sistemas complexos. Decifrando a natureza através da matemática computacional.</p>
-                </section>
-                <section class="panel">
-                    <span class="label">ENGENHARIA & HARDWARE</span>
-                    <h2>Sistemas Ciberfísicos</h2>
-                    <p>Integração hardware e software. Automação de alta precisão, incluindo o sistema LARA.</p>
-                </section>
-                <section class="panel">
-                    <span class="label">DADOS & AUTOMAÇÃO</span>
-                    <h2>Dados & Inteligência</h2>
-                    <p>Extração de verdade científica por meio de Redes Neurais. Transformo ruído em padrões.</p>
-                </section>
-                <section class="panel">
-                    <h2>Avaliação de Projeto</h2>
-                    <p>Utilizo um formulário para análise de viabilidade antes de assumir novos desafios.</p>
-                    <a href="https://forms.gle/hAp8Kv16ofgu1XN27" class="cta-button">INICIAR LEVANTAMENTO TÉCNICO</a>
-                </section>
-            </div>
+        <div class="lara-nota rv">
+          <strong>Distribuição Gratuita:</strong> O LARA será disponibilizado sem custo para grupos e companhias culturais — teatro, dança e artes performáticas. A tecnologia deve remover barreiras criativas, não criar novas.
         </div>
+      </div>
+      <div class="lara-stats rv">
+        <div><div class="ls-val">3</div><div class="ls-lbl">Subsistemas Unificados</div></div>
+        <div><div class="ls-val">&lt;4ms</div><div class="ls-lbl">Latência de Disparo</div></div>
+        <div><div class="ls-val">Live</div><div class="ls-lbl">Ao Vivo — Crítico</div></div>
+        <div><div class="ls-val">Free</div><div class="ls-lbl">Para Cultura</div></div>
+      </div>
+    </div>
+  </div>
+</section>
 
-        <script>
-            gsap.registerPlugin(ScrollTrigger);
+<!-- ── FOTOS LARA ── -->
+<section id="lara-photos">
+  <div class="photos-lbl rv">— Infraestrutura Técnica LARA</div>
+  <div class="ph-wrap" id="phWrap">
+    <div class="ph-track" id="phTrack">
+      <div class="ph-card" style="width:420px;height:500px">
+        <div class="ph-scan"></div><div class="ph-corner"></div><div class="ph-corner br"></div>
+        <div class="ph-ph"><p>Interface Principal<br>Adicione foto do sistema LARA</p></div>
+        <span class="ph-lbl">Interface</span>
+      </div>
+      <div class="ph-card" style="width:360px;height:500px">
+        <div class="ph-scan" style="animation-delay:.9s"></div><div class="ph-corner"></div><div class="ph-corner br"></div>
+        <div class="ph-ph"><p>Hardware Setup<br>Adicione foto aqui</p></div>
+        <span class="ph-lbl">Hardware</span>
+      </div>
+      <div class="ph-card" style="width:260px;height:500px">
+        <div class="ph-scan" style="animation-delay:1.7s"></div><div class="ph-corner"></div><div class="ph-corner br"></div>
+        <div class="ph-ph"><p>Detalhe<br>Técnico</p></div>
+        <span class="ph-lbl">Detalhe</span>
+      </div>
+      <div class="ph-card" style="width:440px;height:500px">
+        <div class="ph-scan" style="animation-delay:2.3s"></div><div class="ph-corner"></div><div class="ph-corner br"></div>
+        <div class="ph-ph"><p>Palco / Ao Vivo<br>Adicione foto do espetáculo</p></div>
+        <span class="ph-lbl">Ao Vivo</span>
+      </div>
+      <div class="ph-card" style="width:320px;height:500px">
+        <div class="ph-scan" style="animation-delay:3s"></div><div class="ph-corner"></div><div class="ph-corner br"></div>
+        <div class="ph-ph"><p>Controle<br>Operacional</p></div>
+        <span class="ph-lbl">Controle</span>
+      </div>
+    </div>
+  </div>
+</section>
 
-            // Zoom Out hero (sem travar)
-            gsap.to("#hero", {
-                scale: 0.9, opacity: 0,
-                scrollTrigger: { trigger: "#hero", start: "top top", end: "bottom top", scrub: 3 }
-            });
+<!-- ── LARA DISTRIBUIÇÃO ── -->
+<section id="lara-dist">
+  <div class="dist-g">
+    <div>
+      <div class="sec-lbl rl">— 02 / Projeto LARA</div>
+      <h2 class="dist-title rl">Tecnologia a<br>serviço da <em>cultura</em>.</h2>
+      <p class="dist-desc rl">
+        O LARA encontra-se em fase final de desenvolvimento. O sistema será distribuído gratuitamente para grupos e companhias culturais — teatro, dança e artes performáticas. Acredito que a tecnologia deve ser um facilitador que remove barreiras técnicas, permitindo que a visão artística do palco se realize sem as limitações de sistemas complexos e inacessíveis.
+      </p>
+      <div class="dist-tags rl">
+        <span class="dtag">Distribuição Gratuita</span>
+        <span class="dtag">Teatro</span>
+        <span class="dtag">Dança</span>
+        <span class="dtag">Performance</span>
+        <span class="dtag">Artes Cênicas</span>
+        <span class="dtag">Live Events</span>
+      </div>
+    </div>
+    <div class="terminal rr">
+      <div class="tl"><span class="tp">$</span> <span class="tw">./lara --init</span></div>
+      <div class="tl"><span class="tg">✓</span> Lighting engine conectado</div>
+      <div class="tl"><span class="tg">✓</span> Audio OSC bridge ativo</div>
+      <div class="tl"><span class="tg">✓</span> Render pipeline pronto</div>
+      <div class="tl"><span class="td"># 3 subsistemas unificados</span></div>
+      <div class="tl">&nbsp;</div>
+      <div class="tl"><span class="tp">$</span> <span class="tw">lara scene --fire cena_01</span></div>
+      <div class="tl"><span class="tg">→</span> Cena 01 disparada</div>
+      <div class="tl"><span class="tg">→</span> Latência: 3.8ms</div>
+      <div class="tl"><span class="tg">→</span> Status: CRÍTICO OK</div>
+      <div class="tl">&nbsp;</div>
+      <div class="tl"><span class="td"># Licença: Uso cultural gratuito</span></div>
+      <div class="tl"><span class="tp">$</span> <span class="tw">lara --request-access</span><span class="tc">▌</span></div>
+    </div>
+  </div>
+</section>
 
-            // LARA HORIZONTAL
-        let laraPanels = gsap.utils.toArray("#horizontal-wrapper-lara .panel");
-        gsap.to(laraPanels, {
-            xPercent: -100 * (laraPanels.length - 1),
-            ease: "none",
-            scrollTrigger: {
-                trigger: "#pin-lara",
-                pin: true,
-                scrub: 2,
-                start: "top top",
-                end: "+=4000"
-            }
-        });
+<!-- ── FUNÇÕES ── -->
+<section id="funcoes">
+  <div class="funcoes-head">
+    <h2 class="funcoes-title reveal">O que faço<br><em>bem.</em></h2>
+    <p class="funcoes-sub reveal">— 03 / Funções<br>Três domínios.<br>Uma abordagem.</p>
+  </div>
+  <div class="cards-grid">
+    <div class="card reveal">
+      <div class="card-num">01</div>
+      <div class="card-cat">Pesquisa & Ciência</div>
+      <h3 class="card-title">Frontier<br>Science</h3>
+      <p class="card-desc">Modelagem lógica de sistemas complexos. Decifrando a natureza através da matemática computacional.</p>
+    </div>
+    <div class="card reveal">
+      <div class="card-num">02</div>
+      <div class="card-cat">Engenharia & Hardware</div>
+      <h3 class="card-title">Sistemas<br>Ciberfísicos</h3>
+      <p class="card-desc">Integração hardware e software. Automação de alta precisão, incluindo o sistema LARA.</p>
+    </div>
+    <div class="card reveal">
+      <div class="card-num">03</div>
+      <div class="card-cat">Dados & Automação</div>
+      <h3 class="card-title">Dados &<br>Inteligência</h3>
+      <p class="card-desc">Extração de verdade científica por meio de Redes Neurais. Transformo ruído em padrões.</p>
+    </div>
+  </div>
+</section>
 
-        // PROJETOS HORIZONTAL
-        let projPanels = gsap.utils.toArray("#horizontal-wrapper-projetos .panel");
-        gsap.to(projPanels, {
-            xPercent: -100 * (projPanels.length - 1),
-            ease: "none",
-            scrollTrigger: {
-                trigger: "#pin-projetos",
-                pin: true,
-                scrub: 2,
-                start: "top top",
-                end: "+=3000"
-            }
-        });
+<!-- ── CONSULTORIA ── -->
+<section id="consultoria">
+  <div class="consul-grid">
+    <div>
+      <div class="sec-label reveal-l">— 04 / Serviços</div>
+      <h2 class="consul-title reveal-l">Consultoria<br>& <em>Desenvolvimento</em></h2>
+      <p class="consul-desc reveal-l">Consultoria especializada em automação de sistemas ciberfísicos, integração de hardware e software, e desenvolvimento de soluções personalizadas para projetos artísticos e técnicos.</p>
+      <div class="feats">
+        <div class="feat reveal-l">
+          <div class="feat-dot"></div>
+          <div><h4>Automação de Sistemas</h4><p>Projetos de automação ciberfísica com alta precisão e confiabilidade em ambientes críticos.</p></div>
+        </div>
+        <div class="feat reveal-l">
+          <div class="feat-dot"></div>
+          <div><h4>Integração Hardware / Software</h4><p>Pontes técnicas entre dispositivos físicos e camadas de software para fluxos unificados.</p></div>
+        </div>
+        <div class="feat reveal-l">
+          <div class="feat-dot"></div>
+          <div><h4>Suporte para Artes</h4><p>Tecnologia como facilitador criativo para companhias de teatro, dança e performance.</p></div>
+        </div>
+      </div>
+    </div>
+    <div class="consul-right">
+      <div class="info-block reveal-r">
+        <div class="info-block-label">Foco</div>
+        <p><strong>→</strong> Eficiência &amp; Confiabilidade<br><strong>→</strong> Redução de complexidade<br><strong>→</strong> Impacto real e mensurável</p>
+      </div>
+      <div class="info-block reveal-r">
+        <div class="info-block-label">Áreas de Atuação</div>
+        <p>
+          <strong>→</strong> Automação Industrial<br>
+          <strong>→</strong> Artes Performáticas<br>
+          <strong>→</strong> Pesquisa Científica<br>
+          <strong>→</strong> Sistemas Embarcados
+        </p>
+      </div>
+      <div class="info-block reveal-r">
+        <div class="info-block-label">Abordagem</div>
+        <p>Análise de viabilidade prévia.<br>Projetos selecionados por<br>complexidade e impacto.</p>
+      </div>
+    </div>
+  </div>
+</section>
 
-        const orangeGrid = document.querySelector('.orange-grid');
-        let maskPoints = [];
+<!-- ── CTA ── -->
+<section id="cta">
+  <div class="cta-glow"></div>
+  <div class="cta-content">
+    <div class="cta-eyebrow reveal">— 05 / Avaliação de Projeto</div>
+    <h2 class="cta-title reveal">
+      Tem um<br>problema<br><em>complexo</em>?
+    </h2>
+    <p class="cta-sub reveal">
+      Utilizo um formulário de análise de viabilidade antes de assumir novos desafios. Projetos são selecionados pela complexidade, impacto e alinhamento técnico.
+    </p>
+    <a href="https://docs.google.com/forms/d/e/1FAIpQLSc_03KQWME90oSzs2y1oPcHWwKgc1Dl9zhXftPW9LLsJgQAZA/viewform?usp=header" target="_blank" class="btn reveal">
+      Submeter Projeto
+      <span class="btn-arr">→</span>
+    </a>
+    <p class="cta-note reveal">Resposta em até 72h &nbsp;·&nbsp; Análise gratuita &nbsp;·&nbsp; Ilhéus, Bahia</p>
+  </div>
+</section>
 
-        // Ajuste: Aumentei um pouco a captura para suavizar a curva
-        hero.addEventListener('mousemove', (e) => {
-            maskPoints.push({ 
-                x: e.clientX, 
-                y: e.clientY, 
-                time: Date.now(),
-                // Adiciona aleatoriedade no tamanho das elipses para fugir do círculo perfeito
-                w: 20 + Math.random() * 150, 
-                h: 20 + Math.random() * 80,
-                // Intensidade variável para criar o efeito de "linhas passando"
-                intensity: 5.4 + Math.random() * 1.6 
-            });
-        });
+<!-- ── FOOTER ── -->
+<footer>
+  <div class="footer-top">
+    <div>
+      <div class="footer-brand">AFX // Arquiteto de Fronteiras</div>
+      <p class="footer-tagline">"A complexidade é apenas uma ignorância temporária das variáveis que compõem o sistema."</p>
+    </div>
+    <div class="footer-links">
+      <a href="#sobre">Sobre</a>
+      <a href="#lara">LARA</a>
+      <a href="#funcoes">Serviços</a>
+      <a href="#cta">Projeto</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span class="footer-copy">© 2025 Arquiteto de Fronteiras. Todos os direitos reservados.</span>
+    <span class="footer-loc">BASE: <span>Ilhéus, Bahia — BR</span></span>
+  </div>
+</footer>
 
-        function updateMask() {
-            const now = Date.now();
-            // Aumentei para 800ms para um rastro mais longo e fluido
-            maskPoints = maskPoints.filter(p => now - p.time < 600);
+<script>
+gsap.registerPlugin(ScrollTrigger);
 
-            const gradients = maskPoints.map(p => {
-                const age = (now - p.time) / 600;
-                const opacity = (1 - age) * p.intensity;
-                // Uso de 'ellipse' em vez de 'circle'
-                return `radial-gradient(ellipse ${p.w}px ${p.h}px at ${p.x}px ${p.y}px, rgba(0,0,0,${opacity}), transparent)`;
-            }).join(', ');
+// ── CURSOR
+const cur=document.getElementById('cur'), cur2=document.getElementById('cur2');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY});
+(function ani(){
+  cur.style.cssText=`left:${mx}px;top:${my}px`;
+  rx+=(mx-rx)*.1; ry+=(my-ry)*.1;
+  cur2.style.cssText=`left:${rx}px;top:${ry}px`;
+  requestAnimationFrame(ani);
+})();
+document.querySelectorAll('a,button,.card,.chip').forEach(el=>{
+  el.addEventListener('mouseenter',()=>{cur2.style.width='60px';cur2.style.height='60px';cur2.style.opacity='.2'});
+  el.addEventListener('mouseleave',()=>{cur2.style.width='32px';cur2.style.height='32px';cur2.style.opacity='.5'});
+});
 
-            orangeGrid.style.webkitMaskImage = gradients;
-            orangeGrid.style.maskImage = gradients;
+// ── LOADER
+const loaderBar=document.getElementById('loader-bar');
+const loaderPct=document.getElementById('loader-pct');
+const loaderText=document.getElementById('loader-text');
+const words=['SISTEMA','LARA','FRONTEIRA','INICIANDO'];
+let wi=0;
+const wordInt=setInterval(()=>{
+  wi=(wi+1)%words.length;
+  loaderText.textContent=words[wi];
+},400);
+let pct=0;
+const pctInt=setInterval(()=>{
+  pct=Math.min(pct+Math.random()*4+1,100);
+  loaderBar.style.width=pct+'%';
+  loaderPct.textContent=Math.floor(pct)+'%';
+  if(pct>=100){
+    clearInterval(pctInt);clearInterval(wordInt);
+    gsap.to('#loader',{opacity:0,duration:.6,delay:.2,onComplete:()=>{
+      document.getElementById('loader').style.display='none';
+      initAnimations();
+    }});
+  }
+},40);
 
-            requestAnimationFrame(updateMask);
-        }
-        updateMask();
+// ── GSAP TEXT (loader word)
+gsap.from('#loader-text',{y:'100%',duration:.4});
 
-        </script>
-    </body>
-    </html>
+function initAnimations(){
+  // HERO reveal
+  gsap.to('.hero-eyebrow-inner',{y:0,duration:1,ease:'power3.out',delay:.1});
+  gsap.to('.line-inner',{y:0,duration:1,ease:'power3.out',stagger:.12,delay:.2});
+  gsap.to('.hero-tag',{opacity:1,duration:1,delay:.8});
+  gsap.to('.hero-meta',{opacity:1,duration:1,delay:.6});
+  gsap.to('.hero-scroll',{opacity:1,duration:1,delay:1.2});
+  gsap.to('.hero-lema',{opacity:1,duration:1,delay:1});
+
+  // HERO parallax
+  gsap.to('.hero-title',{
+    yPercent:-20,
+    scrollTrigger:{trigger:'#hero',start:'top top',end:'bottom top',scrub:1.5}
+  });
+  gsap.to('.hero-bg-text',{
+    yPercent:40,
+    scrollTrigger:{trigger:'#hero',start:'top top',end:'bottom top',scrub:2}
+  });
+
+  // LARA name
+  ScrollTrigger.create({trigger:'#lara',start:'top 65%',
+    onEnter:()=>gsap.to('.lara-name-i',{y:0,duration:1.1,ease:'power3.out'})});
+
+  // glitch on lara hover
+  document.querySelector('.lara-name').addEventListener('mouseenter',()=>{
+    gsap.timeline()
+      .to('.lara-name-i',{skewX:-7,x:8,duration:.07})
+      .to('.lara-name-i',{skewX:4,x:-5,duration:.07})
+      .to('.lara-name-i',{skewX:0,x:0,duration:.09});
+  });
+
+  // Generic reveals
+  document.querySelectorAll('.reveal').forEach(el=>{
+    gsap.to(el,{opacity:1,y:0,duration:.8,ease:'power2.out',
+      scrollTrigger:{trigger:el,start:'top 88%'}
+    });
+  });
+  document.querySelectorAll('.reveal-l').forEach(el=>{
+    gsap.to(el,{opacity:1,x:0,duration:.8,ease:'power2.out',
+      scrollTrigger:{trigger:el,start:'top 88%'}
+    });
+  });
+  document.querySelectorAll('.reveal-r').forEach(el=>{
+    gsap.to(el,{opacity:1,x:0,duration:.8,ease:'power2.out',
+      scrollTrigger:{trigger:el,start:'top 88%'}
+    });
+  });
+
+  // photo strip scroll drift
+  const phTrack=document.getElementById('phTrack');
+  const phWrap=document.getElementById('phWrap');
+  gsap.to(phTrack,{
+    x:()=>-(phTrack.scrollWidth - phWrap.offsetWidth + 52),
+    ease:'none',
+    scrollTrigger:{trigger:'#lara-photos',start:'top bottom',end:'bottom top',scrub:1.6}
+  });
+   // drag
+  let isDown=false,startX=0,sl=0;
+  phWrap.addEventListener('mousedown',e=>{isDown=true;startX=e.pageX-phWrap.offsetLeft;sl=phWrap.scrollLeft});
+  phWrap.addEventListener('mouseleave',()=>isDown=false);
+  phWrap.addEventListener('mouseup',()=>isDown=false);
+  phWrap.addEventListener('mousemove',e=>{
+    if(!isDown)return;e.preventDefault();
+    phWrap.scrollLeft=sl-(e.pageX-phWrap.offsetLeft-startX)*1.4;
+  });
+
+  
+  // cards stagger
+  gsap.from('.card',{opacity:0,y:36,duration:.65,stagger:.14,ease:'power2.out',
+    scrollTrigger:{trigger:'.cards',start:'top 82%'}});
+  gsap.from('.proj-card',{opacity:0,y:28,duration:.6,stagger:.09,ease:'power2.out',
+    scrollTrigger:{trigger:'.proj-grid',start:'top 82%'}});
+}
+</script>
+</body>
+</html>
