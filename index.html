@@ -66,7 +66,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:500;padding:28px 48px;display:fl
 .hero-tag{position:absolute;top:44%;right:48px;font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--tm);writing-mode:vertical-rl;opacity:0}
 
 /* side meta */
-.hero-meta{position:absolute;top:50%;left:48px;transform:translateY(-50%);display:flex;flex-direction:column;gap:4px;opacity:0}
+.hero-meta{position:absolute;top:75%;left:48px;transform:translateY(-50%);display:flex;flex-direction:column;gap:4px;opacity:0}
 .hero-meta span{font-family:var(--mono);font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--td)}
 .hero-meta strong{font-family:var(--mono);font-size:10px;color:var(--o);font-weight:400;letter-spacing:.1em}
 
@@ -116,7 +116,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:500;padding:28px 48px;display:fl
 .lara-stats{display:flex;flex-direction:column;gap:22px}
 .ls-val{font-family:var(--mono);font-size:26px;font-weight:700;color:var(--o)}
 .ls-lbl{font-family:var(--mono);font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--td)}
-.lara-nota{margin-top:32px;font-family:var(--mono);font-size:11px;color:var(--tm);line-height:1.7;max-width:500px;padding:20px;border:1px solid var(--bd);border-left:2px solid var(--o)}
+.lara-nota{margin-top:32px;font-family:var(--mono);font-size:11px;color:var(--tm);line-height:1.7;max-width:500px;padding:20px;border:1px solid var(--o2);border-left:2px solid var(--o)}
 .lara-nota strong{color:var(--o);font-weight:400}
 
 /* ── LARA FOTOS ── */
@@ -253,6 +253,8 @@ footer{background:var(--s1);padding:80px 48px 48px;border-top:1px solid var(--bo
   <div class="hero-meta">
     <span>Localização</span>
     <strong>Ilhéus, BA</strong>
+    <span style="margin-top:12px">GitHub</span>
+    <strong>@Mruuk</strong>
     <span style="margin-top:12px">Status</span>
     <strong style="color:#4ade80">Disponível</strong>
   </div>
@@ -585,7 +587,7 @@ function initAnimations(){
 
   // HERO parallax
   gsap.to('.hero-title',{
-    yPercent:-20,
+    yPercent:-40,
     scrollTrigger:{trigger:'#hero',start:'top top',end:'bottom top',scrub:1.5}
   });
   gsap.to('.hero-bg-text',{
