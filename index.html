@@ -34,8 +34,8 @@ body{font-family:var(--sans);color:var(--t);background:var(--bg);overflow-x:hidd
 
 /* LOADER */
 #loader{position:fixed;inset:0;z-index:9000;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:24px}
-#loader-word{font-family:var(--mono);font-size:clamp(32px,5vw,64px);color:var(--t);letter-spacing:-.02em;overflow:hidden}
-#loader-word span{display:block;transform:translateY(100%)}
+#loader-word{font-family:var(--mono);font-size:clamp(32px,1vw,14px);color:var(--t);letter-spacing:-.02em;overflow:hidden}
+#loader-word span{display:block;transform:translateY(110%)}
 #loader-bar-wrap{width:200px;height:1px;background:var(--td)}
 #loader-bar{height:100%;width:0%;background:var(--o);transition:width .05s linear}
 #loader-pct{font-family:var(--mono);font-size:11px;color:var(--o);letter-spacing:.15em}
@@ -120,12 +120,15 @@ nav{position:fixed;top:0;left:0;right:0;z-index:500;padding:28px 48px;display:fl
 .lara-nota strong{color:var(--o);font-weight:400}
 
 /* ── LARA FOTOS ── */
-#lara-photos{background:var(--bg);padding:72px 52px 100px;overflow:hidden}
-.photos-lbl{font-family:var(--mono);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--o);margin-bottom:36px;display:flex;align-items:center;gap:12px}
+#lara-photos{background:var(--bg);padding-top:72px;padding-bottom:0;        /* sem padding bottom — seção encosta no próximo bloco */}
+.photos-lbl{font-family:var(--mono);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--o);margin-bottom:36px;display:flex;align-items:center;gap:12px;padding:0 52px;          /* recuo lateral só no label */}
 .photos-lbl::before{content:'';width:18px;height:1px;background:var(--o)}
-.ph-wrap{overflow:hidden;cursor:grab}
-.ph-wrap:active{cursor:grabbing}
-.ph-track{display:flex;gap:14px;width:max-content;user-select:none}
+/* pin wrapper: ocupa a tela enquanto o track desliza */
+#ph-pin{width:100%;overflow:hidden;         /* mascara o que sai do viewport */}
+/* track: linha de cards, move via GSAP translateX */
+#phTrack{display:flex;gap:14px;width:max-content;       /* cresce conforme os filhos */ padding:0 52px 80px;     /* recuo lateral + espaço em baixo */will-change:transform;}
+/* cards individuais */
+.ph-card{flex-shrink:0;background:var(--s2);border:1px solid var(--border);position:relative;overflow:hidden;transition:border-color .3s;cursor:grab;}
 .ph-card{flex-shrink:0;background:var(--s2);border:1px solid var(--bd);position:relative;overflow:hidden;transition:border-color .3s}
 .ph-card:hover{border-color:var(--o)}
 .ph-scan{position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--o),transparent);opacity:.45;animation:scan 4.5s ease-in-out infinite}
@@ -367,7 +370,7 @@ footer{background:var(--s1);padding:80px 48px 48px;border-top:1px solid var(--bo
       </div>
       <div class="ph-card" style="width:260px;height:500px">
         <div class="ph-scan" style="animation-delay:1.7s"></div><div class="ph-corner"></div><div class="ph-corner br"></div>
-        <div class="ph-ph"><p>Detalhe<br>Técnico</p></div>
+        <div class="ph-ph"><img src="img/mb_cues.png" style="width:90%;height:90%;object-fit:cover"></div>
         <span class="ph-lbl">Detalhe</span>
       </div>
       <div class="ph-card" style="width:440px;height:500px">
@@ -377,7 +380,7 @@ footer{background:var(--s1);padding:80px 48px 48px;border-top:1px solid var(--bo
       </div>
       <div class="ph-card" style="width:320px;height:500px">
         <div class="ph-scan" style="animation-delay:3s"></div><div class="ph-corner"></div><div class="ph-corner br"></div>
-        <div class="ph-ph"><p>Controle<br>Operacional</p></div>
+        <div class="ph-ph"><img src="img/mb_show.png" style="width:90%;height:90%;object-fit:cover"></div>
         <span class="ph-lbl">Controle</span>
       </div>
     </div>
@@ -553,28 +556,31 @@ document.querySelectorAll('a,button,.card,.chip').forEach(el=>{
 const loaderBar=document.getElementById('loader-bar');
 const loaderPct=document.getElementById('loader-pct');
 const loaderText=document.getElementById('loader-text');
-const words=['SISTEMA','LARA','FRONTEIRA','INICIANDO'];
+const words=['SISTEMA','LARA','FRONTEIRA','RUAN', 'INICIANDO'];
 let wi=0;
 const wordInt=setInterval(()=>{
   wi=(wi+1)%words.length;
   loaderText.textContent=words[wi];
-},400);
+},420);
 let pct=0;
 const pctInt=setInterval(()=>{
-  pct=Math.min(pct+Math.random()*4+1,100);
+  pct=Math.min(pct+Math.random()*2.5+.8,100);
   loaderBar.style.width=pct+'%';
   loaderPct.textContent=Math.floor(pct)+'%';
   if(pct>=100){
     clearInterval(pctInt);clearInterval(wordInt);
-    gsap.to('#loader',{opacity:0,duration:.6,delay:.2,onComplete:()=>{
+    gsap.to('#loader',{opacity:0,duration:.5,delay:.15,onComplete:()=>{
       document.getElementById('loader').style.display='none';
       initAnimations();
     }});
   }
-},40);
+},38);
 
-// ── GSAP TEXT (loader word)
-gsap.from('#loader-text',{y:'100%',duration:.4});
+// ── GSAP TEXT (loader word) — anima de baixo para cima na entrada
+gsap.fromTo('#loader-text',
+  { y:'110%' },
+  { y:'0%', duration:.3 , ease:'power2.out' }
+);
 
 function initAnimations(){
   // HERO reveal
@@ -624,24 +630,6 @@ function initAnimations(){
     });
   });
 
-  // photo strip scroll drift
-  const phTrack=document.getElementById('phTrack');
-  const phWrap=document.getElementById('phWrap');
-  gsap.to(phTrack,{
-    x:()=>-(phTrack.scrollWidth - phWrap.offsetWidth + 52),
-    ease:'none',
-    scrollTrigger:{trigger:'#lara-photos',start:'top bottom',end:'bottom top',scrub:1.6}
-  });
-   // drag
-  let isDown=false,startX=0,sl=0;
-  phWrap.addEventListener('mousedown',e=>{isDown=true;startX=e.pageX-phWrap.offsetLeft;sl=phWrap.scrollLeft});
-  phWrap.addEventListener('mouseleave',()=>isDown=false);
-  phWrap.addEventListener('mouseup',()=>isDown=false);
-  phWrap.addEventListener('mousemove',e=>{
-    if(!isDown)return;e.preventDefault();
-    phWrap.scrollLeft=sl-(e.pageX-phWrap.offsetLeft-startX)*1.4;
-  });
-
   
   // cards stagger
   gsap.from('.card',{opacity:0,y:36,duration:.65,stagger:.14,ease:'power2.out',
@@ -649,6 +637,30 @@ function initAnimations(){
   gsap.from('.proj-card',{opacity:0,y:28,duration:.6,stagger:.09,ease:'power2.out',
     scrollTrigger:{trigger:'.proj-grid',start:'top 82%'}});
 }
+
+ // ── PHOTO STRIP — scroll horizontal com pin
+  const phPin   = document.getElementById('ph-pin');
+  const phTrack = document.getElementById('phTrack');
+
+  // distância que o track precisa percorrer:
+  // largura total do track menos a largura da janela
+  const getSlide = ()=> phTrack.scrollWidth - window.innerWidth;
+
+  gsap.to(phTrack, {
+    x: ()=> -getSlide(),         // move o track para a esquerda
+    ease: 'none',
+    scrollTrigger: {
+      trigger: '#lara-photos',   // a section inteira
+      start:   'top top',        // pina quando o topo da section chega ao topo da tela
+      end:     ()=> '+=' + getSlide(), // dura exatamente o tamanho do slide
+      scrub:   0.8,              // suavidade do scrub (0 = direto, 1+ = mais suave)
+      pin:     true,             // pina a section durante o scroll
+      anticipatePin: 1,          // evita pulo ao entrar no pin
+      invalidateOnRefresh: true, // recalcula em resize
+    }
+  });
+
+
 </script>
 </body>
 </html>
