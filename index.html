@@ -223,6 +223,81 @@ footer{background:var(--s1);padding:80px 48px 48px;border-top:1px solid var(--bo
 .reveal{opacity:0;transform:translateY(36px)}
 .reveal-l{opacity:0;transform:translateX(-36px)}
 .reveal-r{opacity:0;transform:translateX(36px)}
+
+/* ── MOBILE ── */
+@media (max-width: 768px) {
+
+  /* NAV */
+  nav { padding: 20px 24px; }
+  .nav-r { display: none; }
+
+  /* HERO */
+  #hero { padding: 0 24px 48px; }
+  .hero-meta { left: 24px; top: 80%; }
+  .hero-tag { display: none; }
+  .hero-scroll { right: 24px; bottom: 48px; }
+  .hero-lema { font-size: 10px; max-width: 100%; }
+
+  /* MARQUEE */
+  .marquee-item { font-size: 11px; padding: 0 20px; }
+
+  /* SOBRE */
+  #sobre { padding: 80px 24px; }
+  .sobre-grid { grid-template-columns: 1fr; gap: 48px; }
+  .sobre-left { padding: 0; }
+  .sobre-right { padding-top: 0; }
+  .sobre-desc { font-size: 14px; }
+
+  /* LARA */
+  #lara { padding: 80px 24px; }
+  .lara-cols { flex-direction: column; gap: 40px; }
+  .lara-stats { flex-direction: row; flex-wrap: wrap; gap: 24px; }
+  .lara-nota { font-size: 10px; }
+
+  /* LARA FOTOS */
+  #lara-photos { padding-top: 48px; }
+  .photos-lbl { padding: 0 24px; }
+  #ph-pin { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  #phTrack { padding: 0 24px 48px; gap: 10px; }
+  .ph-card { width: 260px !important; height: 340px !important; }
+
+  /* LARA DIST */
+  #lara-dist { padding: 80px 24px; }
+  .dist-g { grid-template-columns: 1fr; gap: 48px; }
+  .terminal { font-size: 11px; padding: 20px; }
+  .terminal::before { font-size: 8px; }
+
+  /* FUNÇÕES */
+  #funcoes { padding: 80px 24px; }
+  .funcoes-head { flex-direction: column; gap: 16px; align-items: flex-start; }
+  .funcoes-sub { text-align: left; max-width: 100%; }
+  .cards-grid { grid-template-columns: 1fr; }
+  .card { padding: 36px 24px; }
+
+  /* CONSULTORIA */
+  #consultoria { padding: 80px 24px; }
+  .consul-grid { grid-template-columns: 1fr; gap: 48px; }
+  .consul-right { padding-top: 0; }
+  .info-block { padding: 24px; }
+
+  /* CTA */
+  #cta { padding: 80px 24px; min-height: auto; }
+  .cta-glow { width: 300px; height: 300px; }
+  .btn { padding: 16px 32px; font-size: 13px; }
+
+  /* FOOTER */
+  footer { padding: 48px 24px 32px; }
+  .footer-top { flex-direction: column; gap: 32px; margin-bottom: 40px; }
+  .footer-links { flex-wrap: wrap; gap: 20px; }
+  .footer-bottom { flex-direction: column; gap: 8px; text-align: center; }
+}
+
+@media (max-width: 480px) {
+  .hero-title { font-size: clamp(52px, 14vw, 80px); }
+  .lara-name { font-size: clamp(64px, 20vw, 120px); }
+  .cta-title { font-size: clamp(44px, 14vw, 80px); }
+  .sobre-title { font-size: clamp(32px, 8vw, 52px); }
+}
 </style>
 </head>
 <body>
@@ -675,27 +750,33 @@ laraSection.addEventListener('mouseleave', () => {
     scrollTrigger:{trigger:'.proj-grid',start:'top 82%'}});
 }
 
- // ── PHOTO STRIP — scroll horizontal com pin
-  const phPin   = document.getElementById('ph-pin');
-  const phTrack = document.getElementById('phTrack');
+ // ── PHOTO STRIP
+const phPin   = document.getElementById('ph-pin');
+const phTrack = document.getElementById('phTrack');
 
-  // distância que o track precisa percorrer:
-  // largura total do track menos a largura da janela
+if(window.innerWidth > 768) {
+  // Desktop: GSAP pin + scroll horizontal
   const getSlide = ()=> phTrack.scrollWidth - window.innerWidth;
-
   gsap.to(phTrack, {
-    x: ()=> -getSlide(),         // move o track para a esquerda
+    x: ()=> -getSlide(),
     ease: 'none',
     scrollTrigger: {
-      trigger: '#lara-photos',   // a section inteira
-      start:   'top top',        // pina quando o topo da section chega ao topo da tela
-      end:     ()=> '+=' + getSlide(), // dura exatamente o tamanho do slide
-      scrub:   0.8,              // suavidade do scrub (0 = direto, 1+ = mais suave)
-      pin:     true,             // pina a section durante o scroll
-      anticipatePin: 1,          // evita pulo ao entrar no pin
-      invalidateOnRefresh: true, // recalcula em resize
+      trigger: '#lara-photos',
+      start:   'top top',
+      end:     ()=> '+=' + getSlide(),
+      scrub:   0.8,
+      pin:     true,
+      anticipatePin: 1,
+      invalidateOnRefresh: true,
     }
   });
+} else {
+  // Mobile: scroll nativo horizontal, sem pin
+  if(phPin) {
+    phPin.style.overflowX = 'auto';
+    phPin.style.webkitOverflowScrolling = 'touch';
+  }
+}
 
 
 </script>
